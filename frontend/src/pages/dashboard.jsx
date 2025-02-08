@@ -66,22 +66,19 @@
 // export default Dashboard;
 // src/pages/Dashboard.jsx
 import React from "react";
+import Navbar from "../component/navbar";
+import Footer from "../component/footer";
+import img2 from "../../src/images/img2.png";
+import img4 from "../../src/images/img4.png";
 
 const Dashboard = () => {
   return (
-    <div>
-      
-      <main className="text-center py-8">
-        <div className="relative">
-          <img src="/dashboard-banner.jpg" alt="Election Banner" className="w-full" />
-          <h1 className="absolute top-10 left-10 text-white text-4xl font-bold">Election Habba</h1>
-        </div>
-        <div className="p-8">
-          <h2 className="text-2xl font-bold">Make Your Vote Count</h2>
-          <p className="text-gray-700">Participate in the electoral process and contribute to democracy.</p>
-        </div>
-      </main>
-     
+    <div className="relative min-h-screen">
+      <Navbar />
+      <img src={img2} className="w-full " alt="img" />
+      <img src={img4} className="w-234px h-192px p-20"  alt="voteimage" />
+
+      <Footer />
     </div>
   );
 };
