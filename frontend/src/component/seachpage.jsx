@@ -1,29 +1,68 @@
 import React, { useState } from "react";
+import Navbar from "./navbar";
+import Footer from "./footer";
+import VoterSlip from "./voterslip";
 
 const SearchPage = () => {
   const [mobileNumber, setMobileNumber] = useState("");
   const [epicNumber, setEpicNumber] = useState("");
-  const [details, setDetails] = useState("");
+  const [details, setDetails] = useState({
+    name: "",
+    relativeName: "",
+    dob: "",
+    age: "",
+    gender: "",
+  });
   const [familyId, setFamilyId] = useState("");
   const [aadhar, setAadhar] = useState("");
   const [searchResult, setSearchResult] = useState(null);
+  const [searchQuery, setSearchQuery] = useState("");
   const [searchType, setSearchType] = useState("epic"); // Set default search type to "epic"
 
   // Mock data for different searches
-  const data = [
+  const voterData = [
     {
+      name: "Naresh Kumar",
+      fatherName: "Ramesh Chand",
+      age: 58,
+      gender: "Male",
+      epicNumber: "BFS1491125",
+      state: "Haryana",
+      constituency: "88-Ballabgarh",
+      pollingStation: "Punjabi Dharmasala",
+      address: "Malerna Road, Ballabgarh",
+      partNumber: "199-Uncha Gaon",
       mobile: "1234567890",
-      name: "John Doe",
-      epic: "EPIC123456",
-      details: "Detail1",
       familyId: "FAMILY123",
       aadhar: "AADHAR123",
     },
     {
+      name: "Naresh",
+      fatherName: "Ramesh Chand",
+      age: 58,
+      gender: "Male",
+      epicNumber: "BFS1491125",
+      state: "Haryana",
+      constituency: "88-Ballabgarh",
+      pollingStation: "Punjabi Dharmasala",
+      address: "Malerna Road, Ballabgarh",
+      partNumber: "199-Uncha Gaon",
+      mobile: "1234567890",
+      familyId: "FAMILY123",
+      aadhar: "AADHAR123",
+    },
+    {
+      name: "Pooja Sharma",
+      fatherName: "Ravi Sharma",
+      age: 45,
+      gender: "Female",
+      epicNumber: "ABC9876543",
+      state: "Delhi",
+      constituency: "50-Karol Bagh",
+      pollingStation: "Community Hall",
+      address: "Karol Bagh, Delhi",
+      partNumber: "105-Karol Bagh",
       mobile: "9876543210",
-      name: "Jane Smith",
-      epic: "EPIC987654",
-      details: "Detail2",
       familyId: "FAMILY987",
       aadhar: "AADHAR987",
     },
@@ -33,68 +72,76 @@ const SearchPage = () => {
   const handleSearch = () => {
     let result;
     if (searchType === "mobile") {
-      result = data.find((item) => item.mobile === mobileNumber);
+      result = voterData.find((item) => item.mobile === mobileNumber);
     } else if (searchType === "epic") {
-      result = data.find((item) => item.epic === epicNumber);
+      result = voterData.find((item) => item.epicNumber === epicNumber); // Fixed
     } else if (searchType === "details") {
-      result = data.find((item) => item.details === details);
+      result = voterData.find(
+        (item) =>
+          item.name.toLowerCase() === details.name.toLowerCase() &&
+          item.fatherName.toLowerCase() === details.relativeName.toLowerCase()
+      );
     } else if (searchType === "familyId") {
-      result = data.find((item) => item.familyId === familyId);
+      result = voterData.find((item) => item.familyId === familyId);
     } else if (searchType === "aadhar") {
-      result = data.find((item) => item.aadhar === aadhar);
+      result = voterData.find((item) => item.aadhar === aadhar);
     }
-
-    if (result) {
-      setSearchResult(result);
-    } else {
-      setSearchResult(null);
-    }
+  
+    setSearchResult(result || null);
   };
 
+  
+  
+
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100 p-4">
+    <div className="flex flex-col min-h-screen">
+      {/* Navbar */}
+      <Navbar />
+    <div className="flex justify-center items-start min-h-screen bg-gray-100 p-4 pt-10">
       <div className="bg-white shadow-lg rounded-lg p-6 w-full max-w-7xl">
         <h1 className="text-2xl font-semibold mb-4 text-center">Search Page</h1>
 
         {/* 5 buttons at the top */}
-        <div className="mb-4 flex justify-center space-x-4">
-          <button
-            onClick={() => setSearchType("epic")}
-            className="bg-green-500 text-white px-4 py-2 rounded"
-          >
-            ईपीसी द्वारा खोजें/SEARCH BY EPIC
-          </button>
-          <button
-            onClick={() => setSearchType("details")}
-            className="bg-yellow-500 text-white px-4 py-2 rounded"
-          >
-            विवरण द्वारा खोजें/SEARCH BY DETAILS
-          </button>
-          <button
-            onClick={() => setSearchType("mobile")}
-            className="bg-blue-300 text-white px-4 py-2 rounded"
-          >
-            मोबाइल द्वारा खोजें/SEARCH BY MOBILE
-          </button>
-        </div>
-        <div className="mb-4 flex justify-center space-x-4">
-          <button
-            onClick={() => setSearchType("familyId")}
-            className="bg-pink-400 text-white px-4 py-2 rounded"
-          >
-            परिवार आईडी द्वारा खोजें/SEARCH BY FAMILY ID
-          </button>
-          <button
-            onClick={() => setSearchType("aadhar")}
-            className="bg-violet-500 text-white px-4 py-2 rounded"
-          >
-            आधार द्वारा खोजें /SEARCH BY AADHAR
-          </button>
-        </div>
+        <div className="mb-4 flex flex-wrap justify-center gap-4">
+  <button
+    onClick={() => setSearchType("epic")}
+    className="w-full sm:w-auto bg-green-500 text-white px-4 py-2 rounded"
+  >
+    ईपीसी द्वारा खोजें/SEARCH BY EPIC
+  </button>
+  <button
+    onClick={() => setSearchType("details")}
+    className="w-full sm:w-auto bg-yellow-500 text-white px-4 py-2 rounded"
+  >
+    विवरण द्वारा खोजें/SEARCH BY DETAILS
+  </button>
+  <button
+    onClick={() => setSearchType("mobile")}
+    className="w-full sm:w-auto bg-blue-300 text-white px-4 py-2 rounded"
+  >
+    मोबाइल द्वारा खोजें/SEARCH BY MOBILE
+  </button>
+</div>
+
+<div className="mb-4 flex flex-wrap justify-center gap-4">
+  <button
+    onClick={() => setSearchType("familyId")}
+    className="w-full sm:w-auto bg-pink-400 text-white px-4 py-2 rounded"
+  >
+    परिवार आईडी द्वारा खोजें/SEARCH BY FAMILY ID
+  </button>
+  <button
+    onClick={() => setSearchType("aadhar")}
+    className="w-full sm:w-auto bg-violet-500 text-white px-4 py-2 rounded"
+  >
+    आधार द्वारा खोजें /SEARCH BY AADHAR
+  </button>
+</div>
+
 
         {/* Search by Mobile, EPIC, Details, Family ID, or Aadhar */}
         {searchType === "mobile" && (
-          <div className="w-full border-2 border-gray-800 rounded p-2">
+          <div className="w-full border-2 border-gray-300 rounded p-2">
             <div className="mb-4 flex flex-col items-center justify-center">
               <label htmlFor="mobile" className="block text-sm font-medium">
                 मोबाइल नंबर/Mobile NUMBER
@@ -112,7 +159,7 @@ const SearchPage = () => {
         )}
 
         {searchType === "epic" && (
-          <div className="w-full border-2 border-gray-800 rounded p-2">
+          <div className="w-full border-2 border-gray-300 rounded p-2">
             <div className="mb-4 flex flex-col items-center justify-center">
               <label htmlFor="epic" className="block text-sm font-medium">
                 EPIC NUMBER
@@ -130,7 +177,7 @@ const SearchPage = () => {
         )}
 
         {searchType === "details" && (
-          <div className="w-full border-2 border-gray-800 rounded p-2">
+          <div className="w-full border-2 border-gray-300 rounded p-2">
             <div className="mb-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {/* Name */}
               <div className="flex flex-col items-center justify-center">
@@ -217,7 +264,7 @@ const SearchPage = () => {
         )}
 
         {searchType === "familyId" && (
-          <div className="w-full border-2 border-gray-800 rounded p-2">
+          <div className="w-full border-2 border-gray-300 rounded p-2">
             <div className="mb-4 flex flex-col items-center justify-center">
               <label htmlFor="familyId" className="block text-sm font-medium">
                 FAMILY ID
@@ -235,7 +282,7 @@ const SearchPage = () => {
         )}
 
         {searchType === "aadhar" && (
-          <div className="w-full border-2 border-gray-800 rounded p-2">
+          <div className="w-full border-2 border-gray-300 rounded p-2">
             <div className="mb-4 flex flex-col items-center justify-center">
               <label htmlFor="aadhar" className="block text-sm font-medium">
                 AADHAR NUMBER
@@ -252,7 +299,25 @@ const SearchPage = () => {
           </div>
         )}
 
-        {/* Search Result */}
+        
+        
+
+        {/* Search and Clear Buttons */}
+        <div className="flex justify-center space-x-4 mt-4">
+            <button onClick={handleSearch} className="bg-blue-600 text-white px-6 py-2 rounded">
+              Search
+            </button>
+            <button
+              onClick={() => {
+                setSearchQuery("");
+                setSearchResult(null);
+              }}
+              className="bg-gray-600 text-white px-6 py-2 rounded"
+            >
+              Clear
+            </button>
+          </div>
+          {/* Search Result */}
         {searchResult && (
           <div className="mb-4">
             <h2 className="text-xl font-semibold">Search Result</h2>
@@ -283,35 +348,11 @@ const SearchPage = () => {
             </p>
           </div>
         )}
-        {searchResult === null &&
-          (mobileNumber || epicNumber || details || familyId || aadhar) && (
-            <p>No result found for this {searchType}.</p>
-          )}
+          {searchResult ? <VoterSlip voter={searchResult} /> : searchQuery && <p className="text-center mt-4">No record found.</p>}
 
-        {/* Search and Clear Buttons */}
-        <div className="mb-4 flex justify-center space-x-4">
-          <button
-            onClick={handleSearch}
-            className="bg-blue-600 text-white px-6 py-2 rounded mt-2"
-          >
-            Search
-          </button>
-          <button
-            onClick={() => {
-              setMobileNumber("");
-              setEpicNumber("");
-              setDetails("");
-              setFamilyId("");
-              setAadhar("");
-              setSearchResult(null);
-              setSearchType("");
-            }}
-            className="bg-blue-600 text-white px-6 py-2 rounded mt-2"
-          >
-            CLEAR
-          </button>
-        </div>
       </div>
+    </div>
+    <Footer/>
     </div>
   );
 };

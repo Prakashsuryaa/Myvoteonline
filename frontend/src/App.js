@@ -7,6 +7,7 @@ import Footer from "./component/footer.jsx";
 import Dashboard from "./pages/dashboard.jsx";
 import VoterForm from "./component/voterform.jsx";
 import SearchPage from "./component/seachpage.jsx";
+import VoterSlipPage from "./component/voterslip.jsx";
 function App() {
   return (
     <Router>
@@ -19,6 +20,7 @@ function App() {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/form" element={<VoterForm />} />
         <Route path="/search-page" element={<SearchPage />} />
+        <Route path="/slip" element={<VoterSlipPage/>} />
       </Routes>
       
     </Router>
