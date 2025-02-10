@@ -20,7 +20,7 @@ const Navbar = () => {
             <option value="">SPAN</option>
             <option value="">URDU</option>
             <option value="">BANGOLI</option>
-            <option value="">CHINDI</option>
+            <option value="">HINDI</option>
           </select>
         </div>
       </div>
