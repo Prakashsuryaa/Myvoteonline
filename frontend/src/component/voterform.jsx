@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Navbar from "./navbar";
 import Footer from "./footer";
+import img4 from "../../src/images/bg.jpg";
 
 const VoterForm = () => {
   const [formData, setFormData] = useState({
@@ -43,8 +44,8 @@ const VoterForm = () => {
     <div className="flex flex-col min-h-screen">
       {/* Navbar */}
       <Navbar />
-    <div className="flex justify-center items-center min-h-screen bg-gray-100 p-4 pt-10">
-      <div className="bg-white shadow-lg rounded-lg p-6 w-full max-w-7xl">
+    <div className="flex justify-center items-center min-h-screen bg-gray-100 p-4 pt-10"  style={{ backgroundImage: `url(${img4} )`, backgroundSize: '100% 100%' }}>
+      <div className=" shadow-lg rounded-lg p-6 w-full max-w-7xl">
         <h2 className="text-xl font-semibold text-center mb-4">
           Voter Registration Form
         </h2>

@@ -1,4 +1,5 @@
-// src/components/Footer.jsx
+import { Link } from "react-router-dom";
+
 import React from "react";
 
 const Footer = () => {
@@ -7,7 +8,7 @@ const Footer = () => {
       <p>HELP | FEEDBACK | CONTACT US</p>
       <p>LAST UPDATE: 21-01-2025</p>
       <p>
-        <a href="https://electoralsearch.eci.gov.in" className="underline">https://electoralsearch.eci.gov.in</a>
+        <Link to="https://electoralsearch.eci.gov.in" className="underline">https://electoralsearch.eci.gov.in</Link>
       </p>
     </footer>
   );
