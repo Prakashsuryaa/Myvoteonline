@@ -16,7 +16,7 @@ function App() {
   return (
     <Router>
 
-    <Suspense fallback={<div> Loding..... </div> }>
+    <Suspense fallback={<div> Loading..... </div> }>
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/navbar" element={<Navbar />} />
