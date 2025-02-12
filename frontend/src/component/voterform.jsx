@@ -3,6 +3,40 @@ import Navbar from "./navbar";
 import Footer from "./footer";
 import img4 from "../../src/images/bg.jpg";
 
+const InputField = ({ label, name, type = "text", value, onChange, placeholder, error }) => (
+  <div className="w-full">
+    <label className="block text-sm font-medium">{label}</label>
+    <input
+      name={name}
+      value={value}
+      onChange={onChange}
+      type={type}
+      className={`w-full border rounded p-2 ${error ? "border-red-500" : "border-gray-300"}`}
+      placeholder={placeholder}
+    />
+    {error && <p className="text-red-500 text-sm">{error}</p>}
+  </div>
+);
+
+const SelectField = ({ label, name, value, onChange, options, error }) => (
+  <div className="w-full">
+    <label className="block text-sm font-medium">{label}</label>
+    <select
+      name={name}
+      value={value}
+      onChange={onChange}
+      className={`w-full border rounded p-2 ${error ? "border-red-500" : "border-gray-300"}`}
+    >
+      {options.map((option) => (
+        <option key={option.value} value={option.value}>
+          {option.label}
+        </option>
+      ))}
+    </select>
+    {error && <p className="text-red-500 text-sm">{error}</p>}
+  </div>
+);
+
 const VoterForm = () => {
   const [formData, setFormData] = useState({
     parliamentaryNo: "",
@@ -27,291 +61,85 @@ const VoterForm = () => {
     state: "",
   });
 
-  // Handle input change
+  const [errors, setErrors] = useState({});
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // Handle form submit
+  const validateForm = () => {
+    let newErrors = {};
+    if (!formData.name) newErrors.name = "Name is required";
+    if (!formData.phone) newErrors.phone = "Phone number is required";
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
   const handleSubmit = (e) => {
-    e.preventDefault(); // Prevent page refresh
-    console.log("Form Data Submitted:", formData); // Log data to console
-    alert("Voter registration saved successfully!"); // Show success message
+    e.preventDefault();
+    if (validateForm()) {
+      alert("Voter registration saved successfully!");
+      setFormData({
+        parliamentaryNo: "",
+        assemblyNo: "",
+        wardNo: "",
+        epicNo: "",
+        name: "",
+        fatherName: "",
+        dob: "",
+        age: "",
+        religion: "",
+        caste: "",
+        gender: "",
+        phone: "",
+        aadharNo: "",
+        familyId: "",
+        rationCard: "",
+        boothNo: "",
+        partNo: "",
+        address: "",
+        district: "",
+        state: "",
+      });
+      setErrors({});
+    }
   };
 
   return (
-  
     <div className="flex flex-col min-h-screen">
-      {/* Navbar */}
       <Navbar />
-    <div className="flex justify-center items-center min-h-screen bg-gray-100 p-4 pt-10"  style={{ backgroundImage: `url(${img4} )`, backgroundSize: '100% 100%' }}>
-      <div className=" shadow-lg rounded-lg p-6 w-full max-w-7xl">
-        <h2 className="text-xl font-semibold text-center mb-4">
-          Voter Registration Form
-        </h2>
-
-        <form
-          onSubmit={handleSubmit}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4"
-        >
-          <div>
-            <label className="block text-sm font-medium">
-              Parliamentary Constituency No.
-            </label>
-            <input
-              name="parliamentaryNo"
-              value={formData.parliamentaryNo}
-              onChange={handleChange}
-              type="text"
-              className="w-full border rounded p-2"
-              placeholder="Enter No."
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium">
-              Assembly Constituency No.
-            </label>
-            <input
-              name="assemblyNo"
-              value={formData.assemblyNo}
-              onChange={handleChange}
-              type="text"
-              className="w-full border rounded p-2"
-              placeholder="Enter No."
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium">Ward No.</label>
-            <input
-              name="wardNo"
-              value={formData.wardNo}
-              onChange={handleChange}
-              type="text"
-              className="w-full border rounded p-2"
-              placeholder="Enter No."
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium">EPIC NO.</label>
-            <input
-              name="epicNo"
-              value={formData.epicNo}
-              onChange={handleChange}
-              type="text"
-              className="w-full border rounded p-2"
-              placeholder="NAH0000123"
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium">Name</label>
-            <input
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-              type="text"
-              className="w-full border rounded p-2"
-              placeholder="Full Name"
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium">Father's Name</label>
-            <input
-              name="fatherName"
-              value={formData.fatherName}
-              onChange={handleChange}
-              type="text"
-              className="w-full border rounded p-2"
-              placeholder="Father's Name"
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium">Date of Birth</label>
-            <input
-              name="dob"
-              value={formData.dob}
-              onChange={handleChange}
-              type="date"
-              className="w-full border rounded p-2"
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium">Age</label>
-            <input
-              name="age"
-              value={formData.age}
-              onChange={handleChange}
-              type="text"
-              className="w-full border rounded p-2"
-              placeholder="Enter Age"
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium">Religion</label>
-            <input
-              name="religion"
-              value={formData.religion}
-              onChange={handleChange}
-              type="text"
-              className="w-full border rounded p-2"
-              placeholder="Religion"
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium">Caste</label>
-            <input
-              name="caste"
-              value={formData.caste}
-              onChange={handleChange}
-              type="text"
-              className="w-full border rounded p-2"
-              placeholder="Caste"
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium">Gender</label>
-            <select
-              name="gender"
-              value={formData.gender}
-              onChange={handleChange}
-              className="w-full border rounded p-2"
-            >
-              <option value="">Select Gender</option>
-              <option value="male">Male</option>
-              <option value="female">Female</option>
-              <option value="other">Other</option>
-            </select>
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium">Phone</label>
-            <input
-              name="phone"
-              value={formData.phone}
-              onChange={handleChange}
-              type="text"
-              className="w-full border rounded p-2"
-              placeholder="XXXXXX XXXXX"
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium">Aadhar No.</label>
-            <input
-              name="aadharNo"
-              value={formData.aadharNo}
-              onChange={handleChange}
-              type="text"
-              className="w-full border rounded p-2"
-              placeholder="XXXX XXXX XXXX"
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium">Family ID No.</label>
-            <input
-              name="familyId"
-              value={formData.familyId}
-              onChange={handleChange}
-              type="text"
-              className="w-full border rounded p-2"
-              placeholder="Enter family ID"
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium">Ration Card No.</label>
-            <input
-              name="rationCard"
-              value={formData.rationCard}
-              onChange={handleChange}
-              type="text"
-              className="w-full border rounded p-2"
-              placeholder="Enter ration card no."
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium">Booth No.</label>
-            <input
-              name="boothNo"
-              value={formData.boothNo}
-              onChange={handleChange}
-              type="text"
-              className="w-full border rounded p-2"
-              placeholder="Enter Booth No."
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium">Part No.</label>
-            <input
-              name="partNo"
-              value={formData.partNo}
-              onChange={handleChange}
-              type="text"
-              className="w-full border rounded p-2"
-              placeholder="Enter Part No."
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium">Address</label>
-            <input
-              name="address"
-              value={formData.address}
-              onChange={handleChange}
-              type="text"
-              className="w-full border rounded p-2"
-              placeholder="Enter Address"
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium">District</label>
-            <input
-              name="district"
-              value={formData.district}
-              onChange={handleChange}
-              type="text"
-              className="w-full border rounded p-2"
-              placeholder="District"
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium">State</label>
-            <input
-              name="state"
-              value={formData.state}
-              onChange={handleChange}
-              type="text"
-              className="w-full border rounded p-2"
-              placeholder="State"
-            />
-          </div>
-
-          <div className="col-span-4 flex justify-end mt-4">
-            <button
-              type="submit"
-              className="bg-blue-600 text-white px-6 py-2 rounded"
-            >
-              Save
-            </button>
-          </div>
-        </form>
+      <div className="flex justify-center items-center min-h-screen bg-gray-100 p-4 pt-10">
+        <div className="bg-white shadow-lg rounded-lg p-6 w-full max-w-7xl">
+          <h2 className="text-xl font-semibold text-center mb-4">Voter Registration Form</h2>
+          <form onSubmit={handleSubmit} className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            <InputField label="Parliamentary No." name="parliamentaryNo" value={formData.parliamentaryNo} onChange={handleChange} placeholder="Enter No." />
+            <InputField label="Assembly No." name="assemblyNo" value={formData.assemblyNo} onChange={handleChange} placeholder="Enter Assembly no." />
+            <InputField label="Ward No." name="wardNo" value={formData.wardNo} onChange={handleChange} placeholder="Enter Ward no." />
+            <InputField label="EPIC NO." name="epicNo" value={formData.epicNo} onChange={handleChange} placeholder="NAH0000123" />
+            <InputField label="Name" name="name" value={formData.name} onChange={handleChange} placeholder="Full Name" error={errors.name} />
+            <InputField label="Father's Name" name="fatherName" value={formData.fatherName} onChange={handleChange} placeholder="Father's Name" error={errors.fatherName} />
+            <InputField label="Date of Birth" name="dob" value={formData.dob} onChange={handleChange} type="date" error={errors.dob} />
+            <InputField label="Age" name="age" value={formData.age} onChange={handleChange} placeholder="Enter Age" error={errors.age} />
+            <InputField label="Religion" name="religion" value={formData.religion} onChange={handleChange} placeholder="Religion" />
+            <InputField label="Caste" name="caste" value={formData.caste} onChange={handleChange} placeholder="Caste" />
+            <SelectField label="Gender" name="gender" value={formData.gender} onChange={handleChange} options={[{ value: "", label: "Select Gender" }, { value: "male", label: "Male" }, { value: "female", label: "Female" }, { value: "other", label: "Other" }]} error={errors.gender} />
+            <InputField label="Phone" name="phone" value={formData.phone} onChange={handleChange} placeholder="XXXXXX XXXXX" error={errors.phone} />
+            <InputField label="Aadhar No." name="aadharNo" value={formData.aadharNo} onChange={handleChange} placeholder="XXXX XXXX XXXX" error={errors.aadharNo} />
+            <InputField label="Family ID No." name="familyId" value={formData.familyId} onChange={handleChange} placeholder="Enter Family Id No."  />
+            <InputField label="Ration Card No." name="rationCard" value={formData.rationCard} onChange={handleChange} placeholder="Enter Ration Card no." />
+            <InputField label="Booth No." name="boothNo" value={formData.boothNo} onChange={handleChange} placeholder="Enter Booth No." />
+            <InputField label="Part  No." name="partNo" value={formData.partNo} onChange={handleChange} placeholder="Enter part No." />
+            
+            <InputField label="Address" name="address" value={formData.address} onChange={handleChange} placeholder="Enter Address" error={errors.address} />
+            <InputField label="District" name="district" value={formData.district} onChange={handleChange} placeholder="District" error={errors.district} />
+            <InputField label="State" name="state" value={formData.state} onChange={handleChange} placeholder="State" error={errors.state} />
+            <div className="col-span-1 sm:col-span-2 md:col-span-3 lg:col-span-4 flex justify-end mt-4">
+              <button type="submit" className="bg-blue-600 text-white px-6 py-2 rounded">Save</button>
+            </div>
+          </form>
+        </div>
       </div>
-    </div>
-    <Footer/>
+      <Footer />
     </div>
   );
 };
