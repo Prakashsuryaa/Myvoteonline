@@ -3,6 +3,7 @@ import Navbar from "./navbar";
 import Footer from "./footer";
 import VoterSlip from "./voterslip";
 
+
 const SearchPage = () => {
   const [mobileNumber, setMobileNumber] = useState("");
   const [epicNumber, setEpicNumber] = useState("");
@@ -17,7 +18,7 @@ const SearchPage = () => {
   const [aadhar, setAadhar] = useState("");
   const [searchResult, setSearchResult] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
-  const [searchType, setSearchType] = useState("epic"); // Set default search type to "epic"
+  const [searchType, setSearchType] = useState("epic"); 
 
   // Mock data for different searches
   const voterData = [
