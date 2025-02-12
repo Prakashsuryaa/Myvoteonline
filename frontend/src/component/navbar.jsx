@@ -52,7 +52,7 @@ const Navbar = () => {
             { name: "About Us", path: "/aboutus" },
             { name: "Services", path: "/services" },
             { name: "Form", path: "/form" },
-            { name: "Election", path: "/election" },
+            { name: "Search Pages", path: "/search-page" },
           ].map((item) => (
             <li key={item.name} onClick={() => navigate(item.path)} className="hover:text-blue-700 transition">
               {item.name}

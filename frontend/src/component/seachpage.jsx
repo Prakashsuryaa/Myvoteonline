@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import Navbar from "./navbar";
 import Footer from "./footer";
 import VoterSlip from "./voterslip";
+import img4 from "../../src/images/bg.jpg";
+
+
 
 const SearchPage = () => {
   const [mobileNumber, setMobileNumber] = useState("");
@@ -17,7 +20,7 @@ const SearchPage = () => {
   const [aadhar, setAadhar] = useState("");
   const [searchResult, setSearchResult] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
-  const [searchType, setSearchType] = useState("epic"); // Set default search type to "epic"
+  const [searchType, setSearchType] = useState("epic"); 
 
   // Mock data for different searches
   const voterData = [
@@ -94,30 +97,30 @@ const SearchPage = () => {
   
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen" >
       {/* Navbar */}
       <Navbar />
-    <div className="flex justify-center items-start min-h-screen bg-gray-100 p-4 pt-10">
-      <div className="bg-white shadow-lg rounded-lg p-6 w-full max-w-7xl">
+    <div className="flex justify-center items-start min-h-screen p-4 pt-10" style={{ backgroundImage: `url(${img4} )`, backgroundSize: '100% 100%' }}>
+      <div className=" shadow-lg rounded-lg p-6 w-full max-w-7xl">
         <h1 className="text-2xl font-semibold mb-4 text-center">Search Page</h1>
 
         {/* 5 buttons at the top */}
         <div className="mb-4 flex flex-wrap justify-center gap-4">
   <button
     onClick={() => setSearchType("epic")}
-    className="w-full sm:w-auto bg-green-500 text-white px-4 py-2 rounded"
+    className="w-full sm:w-auto bg-green-500 text-white px-4 py-2 rounded  hover:bg-green-600"
   >
     ईपीसी द्वारा खोजें/SEARCH BY EPIC
   </button>
   <button
     onClick={() => setSearchType("details")}
-    className="w-full sm:w-auto bg-yellow-500 text-white px-4 py-2 rounded"
+    className="w-full sm:w-auto bg-yellow-500 text-white px-4 py-2 rounded  hover:bg-yellow-600"
   >
     विवरण द्वारा खोजें/SEARCH BY DETAILS
   </button>
   <button
     onClick={() => setSearchType("mobile")}
-    className="w-full sm:w-auto bg-blue-300 text-white px-4 py-2 rounded"
+    className="w-full sm:w-auto bg-gray-500 text-white px-4 py-2 rounded  hover:bg-gray-600"
   >
     मोबाइल द्वारा खोजें/SEARCH BY MOBILE
   </button>
@@ -126,13 +129,13 @@ const SearchPage = () => {
 <div className="mb-4 flex flex-wrap justify-center gap-4">
   <button
     onClick={() => setSearchType("familyId")}
-    className="w-full sm:w-auto bg-pink-400 text-white px-4 py-2 rounded"
+    className="w-full sm:w-auto bg-orange-600 text-white px-4 py-2 rounded  hover:bg-orange-700"
   >
     परिवार आईडी द्वारा खोजें/SEARCH BY FAMILY ID
   </button>
   <button
     onClick={() => setSearchType("aadhar")}
-    className="w-full sm:w-auto bg-violet-500 text-white px-4 py-2 rounded"
+    className="w-full sm:w-auto bg-violet-600 text-white px-4 py-2 rounded  hover:bg-violet-700"
   >
     आधार द्वारा खोजें /SEARCH BY AADHAR
   </button>
@@ -304,7 +307,7 @@ const SearchPage = () => {
 
         {/* Search and Clear Buttons */}
         <div className="flex justify-center space-x-4 mt-4">
-            <button onClick={handleSearch} className="bg-blue-600 text-white px-6 py-2 rounded">
+            <button onClick={handleSearch} className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700">
               Search
             </button>
             <button
@@ -312,7 +315,7 @@ const SearchPage = () => {
                 setSearchQuery("");
                 setSearchResult(null);
               }}
-              className="bg-gray-600 text-white px-6 py-2 rounded"
+              className="bg-gray-600 text-white px-6 py-2 rounded hover:bg-gray-700"
             >
               Clear
             </button>
