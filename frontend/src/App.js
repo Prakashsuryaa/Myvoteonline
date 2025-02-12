@@ -27,7 +27,7 @@ function App() {
         <Route path="/search-page" element={<SearchPage />} />
         <Route path="/slip" element={<VoterSlipPage/>} />
       </Routes>
-      </Suspense>
+      </Suspense> 
       
     </Router>
   );
