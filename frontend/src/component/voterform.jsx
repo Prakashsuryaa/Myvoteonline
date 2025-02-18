@@ -108,8 +108,8 @@ const VoterForm = () => {
   return (
     <div className="flex flex-col min-h-screen">
       <Navbar />
-      <div className="flex justify-center items-center min-h-screen bg-gray-100 p-4 pt-10">
-        <div className="bg-white shadow-lg rounded-lg p-6 w-full max-w-7xl">
+      <div className="flex justify-center items-center min-h-screen p-4 pt-10"  style={{ backgroundImage: `url(${img4} )`, backgroundSize: '100% 100%' }}>
+        <div className=" shadow-lg rounded-lg p-6 w-full max-w-7xl">
           <h2 className="text-xl font-semibold text-center mb-4">Voter Registration Form</h2>
           <form onSubmit={handleSubmit} className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             <InputField label="Parliamentary No." name="parliamentaryNo" value={formData.parliamentaryNo} onChange={handleChange} placeholder="Enter No." />
