@@ -78,9 +78,9 @@ const Navbar = () => {
               {servicesDropdown && (
                 <ul className="absolute left-0 mt-2 w-40 bg-white shadow-lg rounded-md overflow-hidden z-50 text-sm text-gray-700">
                   <li>
-                    <button onClick={() => { navigate("/social-media"); setServicesDropdown(false); }} className="w-full px-4 py-2 text-left hover:bg-gray-100">
+                    <button onClick={() => { navigate("/socialmedia"); setServicesDropdown(false); }} className="w-full px-4 py-2 text-left hover:bg-gray-100">
                       Social Media
-                    </button>
+                    </button> 
                   </li>
                 </ul>
               )}
