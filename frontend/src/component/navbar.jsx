@@ -1,21 +1,21 @@
 import React, { useState } from "react";
 import { FaSearch, FaBars, FaTimes } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 import img from "../../src/images/Img1.png";
 import img3 from "../../src/images/img3.png";
 import img4 from "../../src/images/img4.png";
-import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [servicesDropdown, setServicesDropdown] = useState(false);
 
   return (
     <>
       {/* Navbar Section */}
       <div className="h-12 w-full bg-[#165887] flex items-center justify-between px-4 md:px-6 relative">
         <div></div>
-
         <div className="flex items-center gap-x-4 ml-auto">
           {/* Language Selector */}
           <div className="text-black bg-[#FEFCFC] h-7 px-3 rounded-lg">
@@ -28,7 +28,6 @@ const Navbar = () => {
               <option value="">HINDI</option>
             </select>
           </div>
-
           {/* Profile */}
           <div className="relative">
             <div
@@ -41,14 +40,10 @@ const Navbar = () => {
               <div className="absolute right-0 mt-2 w-40 bg-white shadow-lg rounded-md overflow-hidden z-50">
                 <ul className="text-sm text-gray-700">
                   <li>
-                    <button className="w-full px-4 py-2 text-left hover:bg-gray-100">
-                      Settings
-                    </button>
+                    <button className="w-full px-4 py-2 text-left hover:bg-gray-100"> <a href="/setting">Settings</a></button>
                   </li>
                   <li>
-                    <button className="w-full px-4 py-2 text-left hover:bg-gray-100">
-                      Logout
-                    </button>
+                    <button className="w-full px-4 py-2 text-left hover:bg-gray-100">Logout</button>
                   </li>
                 </ul>
               </div>
@@ -61,9 +56,7 @@ const Navbar = () => {
       <div className="flex flex-col md:flex-row items-center justify-between w-full px-6 md:px-[73px] py-3 gap-6">
         <div className="flex items-center gap-4 md:gap-6">
           <img src={img} alt="Election Logo" className="h-16 md:h-24 w-auto" />
-          <span className="text-xl md:text-2xl font-bold text-[#165887] font-sans">
-            My Vote Online
-          </span>
+          <span className="text-xl md:text-2xl font-bold text-[#165887] font-sans">My Vote Online</span>
         </div>
         <img src={img3} className="h-16 md:h-24 w-auto" alt="India logo" />
       </div>
@@ -73,23 +66,40 @@ const Navbar = () => {
         <button className="md:hidden text-[#165887]" onClick={() => setMenuOpen(!menuOpen)}>
           {menuOpen ? <FaTimes size={24} /> : <FaBars size={24} />}
         </button>
-        <ul className="flex space-x-20 text-lg font-semibold cursor-pointer">
-          {[
-            { name: "Home", path: "/dashboard" },
-            { name: "About Us", path: "/aboutus" },
-            { name: "Services", path: "/services" },
-            { name: "Form", path: "/form" },
-            { name: "Search Pages", path: "/search-page" },
-          ].map((item) => (
-            <li key={item.name} onClick={() => navigate(item.path)} className="hover:text-blue-700 transition">
-              {item.name}
+        <div className="flex w-full justify-between items-center">
+          <ul className={`${menuOpen ? "flex flex-col space-y-4 absolute top-full left-0 w-full bg-[#E8FAFC] p-4 shadow-lg" : "hidden"} md:flex md:flex-row md:space-x-20 text-lg font-semibold cursor-pointer`}>
+            <li onClick={() => { navigate("/dashboard"); setMenuOpen(false); }} className="hover:text-blue-700 transition">Home</li>
+            <li onClick={() => { navigate("/form"); setMenuOpen(false); }} className="hover:text-blue-700 transition">Form</li>
+            <li onClick={() => { navigate("/search-page"); setMenuOpen(false); }} className="hover:text-blue-700 transition">Search Pages</li>
+            <li className="relative">
+              <button onClick={() => setServicesDropdown(!servicesDropdown)} className="hover:text-blue-700 transition">
+                Services
+              </button>
+              {servicesDropdown && (
+                <ul className="absolute left-0 mt-2 w-40 bg-white shadow-lg rounded-md overflow-hidden z-50 text-sm text-gray-700">
+                  <li>
+                    <button onClick={() => { navigate("/social-media"); setServicesDropdown(false); }} className="w-full px-4 py-2 text-left hover:bg-gray-100">
+                      Social Media
+                    </button>
+                  </li>
+                </ul>
+              )}
             </li>
-          ))}
-        </ul>
-        <button className="hidden md:flex items-center gap-2 text-[#165887] text-sm px-4 md:px-6 py-2 rounded-2xl bg-[#FBF6F6]">
-          <FaSearch aria-label="Search" />
-          <input type="search" placeholder="Search Page" className="border-none outline-none" />
-        </button>
+            <li onClick={() => { navigate("/aboutus"); setMenuOpen(false); }} className="hover:text-blue-700 transition">About Us</li>
+          </ul>
+          <div className="flex justify-end md:hidden w-full mt-2 px-4">
+            <button className="flex items-center gap-2 text-[#165887] text-sm px-3 py-1 rounded-xl bg-[#FBF6F6] w-[80%]">
+              <FaSearch aria-label="Search" />
+              <input type="search" placeholder="Search Page" className="border-none outline-none bg-transparent w-full text-sm" />
+            </button>
+          </div>
+          <div className="hidden md:flex justify-end">
+            <button className="flex items-center gap-2 text-[#165887] text-sm px-4 md:px-6 py-2 rounded-2xl bg-[#FBF6F6]">
+              <FaSearch aria-label="Search" />
+              <input type="search" placeholder="Search Page" className="border-none outline-none bg-transparent" />
+            </button>
+          </div>
+        </div>
       </nav>
     </>
   );

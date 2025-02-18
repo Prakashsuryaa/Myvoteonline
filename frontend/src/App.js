@@ -2,6 +2,7 @@ import "./App.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Suspense, lazy } from 'react';
 
+
 //lazy load the component 
 
 const Register = lazy(()=> import ('./component/register.jsx'))
@@ -13,7 +14,8 @@ const Login = lazy(()=> import ('./component/login.jsx'))
 const Navbar = lazy(() => import('./component/navbar.jsx'))
 const VoterSlipPage =lazy (() =>import('./component/voterslip.jsx'))
 const AboutUs = lazy(() => import('./component/aboutus.jsx'))
-const Services = lazy(() => import('./component/services.jsx'))
+const Setting = lazy(() => import('./component/setting.jsx'))
+
 
 function App() {
   return (
@@ -30,7 +32,7 @@ function App() {
         <Route path="/search-page" element={<SearchPage />} />
         <Route path="/slip" element={<VoterSlipPage/>} />
         <Route path="/aboutus" element={<AboutUs/>} />
-        <Route path="/services" element={<Services/>} />
+        <Route path="/setting" element={<Setting/>} />
       </Routes>
      
       </Suspense>
