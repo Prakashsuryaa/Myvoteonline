@@ -86,6 +86,7 @@ const Navbar = () => {
               )}
             </li>
             <li onClick={() => { navigate("/aboutus"); setMenuOpen(false); }} className="hover:text-blue-700 transition">About Us</li>
+            <li onClick={() => { navigate("/fileupload"); setMenuOpen(false); }} className="hover:text-blue-700 transition">Category</li>
           </ul>
           <div className="flex justify-end md:hidden w-full mt-2 px-4">
             <button className="flex items-center gap-2 text-[#165887] text-sm px-3 py-1 rounded-xl bg-[#FBF6F6] w-[80%]">
