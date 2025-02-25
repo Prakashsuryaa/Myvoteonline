@@ -46,7 +46,7 @@ const Navbar = () => {
                     <button className="w-full px-4 py-2 text-left hover:bg-gray-100"> <a href="/setting">Settings</a></button>
                   </li>
                   <li>
-                    <button className="w-full px-4 py-2 text-left hover:bg-gray-100">Logout</button>
+                    <button className="w-full px-4 py-2 text-left hover:bg-gray-100"><a href="/" className="text-red-500">Logout</a></button>
                   </li>
                 </ul>
               </div>

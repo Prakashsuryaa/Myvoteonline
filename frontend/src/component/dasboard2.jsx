@@ -1,22 +1,43 @@
 import React from "react";
-import { FaSearch, FaUser, FaList, FaMapMarkerAlt, FaPhone, FaUsers, FaLayerGroup, FaPalette, FaCheckCircle, FaCopy, FaCalendarCheck, FaThumbsUp, FaThumbsDown, FaCertificate, FaCrown, FaHandshake } from "react-icons/fa";
-import Sidebar from "./sidebar";
+import img from "../images/bhushan.jpg";
+import { 
+    FaSearch, FaUser, FaList, FaMapMarkerAlt, FaPhone, FaUsers, FaLayerGroup, FaPalette, 
+    FaCheckCircle, FaCopy, FaCalendarCheck, FaThumbsUp, FaThumbsDown, FaCertificate, FaCrown, FaHandshake 
+} from "react-icons/fa";
+import Sidebar from "./sidebar";  // Ensure the correct import path
 
 const Dashboard2 = () => {
     return (
-        <div className="flex h-full bg-gradient-to-r from-blue-500 to-indigo-600 text-white">
+        <div className="flex h-screen">
+            {/* Sidebar */}
             <Sidebar />
-            <div className="flex-1 p-6">
-               
-                <div className="bg-white shadow-md p-4 rounded-lg text-black flex items-center gap-3">
-                    <input type="text" placeholder="Enter Name, Door No" className="flex-1 p-2 border rounded-md" />
-                    <button className="bg-blue-500 text-white p-2 rounded-md flex items-center gap-1">
+
+            {/* Main Content */}
+            <div className="flex-1 p-6 bg-gray-100 overflow-auto">
+                {/* Image Div */}
+                <div className="h-60 w-auto border overflow-hidden mt-4">
+                    <img src={img} alt="Dashboard" className="w-full h-full object-cover" />
+                </div>
+                
+                {/* Search Bar */}
+                <div className="bg-white shadow-md p-4 rounded-lg flex items-center gap-3 mt-4">
+                    <input 
+                        type="text" 
+                        placeholder="Enter Name, Door No" 
+                        className="flex-1 p-2 border rounded-md outline-none"
+                    />
+                    <button className="bg-blue-500 text-white px-4 py-2 rounded-md flex items-center gap-1">
                         <FaSearch /> Search
                     </button>
                 </div>
-                <div className="grid grid-cols-3 gap-6 mt-6">
+
+                {/* Menu Grid */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
                     {menuItems.map((item, index) => (
-                        <div key={index} className="bg-white shadow-lg rounded-lg p-6 flex flex-col items-center gap-3 text-center text-black hover:scale-105 transition-transform cursor-pointer">
+                        <div 
+                            key={index} 
+                            className="bg-white shadow-lg rounded-lg p-6 flex flex-col items-center gap-3 text-center text-black hover:scale-105 transition-transform cursor-pointer"
+                        >
                             {item.icon}
                             <span className="font-semibold">{item.label}</span>
                         </div>
@@ -27,6 +48,7 @@ const Dashboard2 = () => {
     );
 };
 
+// Menu Items
 const menuItems = [
     { label: "Booth Wise", icon: <FaUser size={30} className="text-red-500" /> },
     { label: "Alphabetic", icon: <FaList size={30} className="text-blue-500" /> },
@@ -41,7 +63,7 @@ const menuItems = [
     { label: "Voted", icon: <FaThumbsUp size={30} className="text-green-700" /> },
     { label: "Non Voted", icon: <FaThumbsDown size={30} className="text-red-700" /> },
     { label: "Verified/Unverified", icon: <FaCertificate size={30} className="text-yellow-700" /> },
-    { label: "Beneficiary Wise", icon: <FaCrown size={30} className="text-gold-500" /> },
+    { label: "Beneficiary Wise", icon: <FaCrown size={30} className="text-yellow-500" /> },
     { label: "Others", icon: <FaHandshake size={30} className="text-blue-700" /> },
 ];
 
