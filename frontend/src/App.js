@@ -4,6 +4,7 @@ import React, { lazy, Suspense } from "react";
 
 
 
+
 // Lazy load the components
 const Register = lazy(() => import("./component/register.jsx"));
 const Footer = lazy(() => import("./component/footer.jsx"));
@@ -22,6 +23,7 @@ const SupportDetails = lazy(() => import("./component/support.jsx"));
 const LoginFailure = lazy(() => import("./component/loginfailure.jsx")); 
 const ServerErrorPage = lazy(() => import("./component/servererror.jsx"));
 const Setting = lazy(() => import('./component/setting.jsx'))
+const Sidebar =lazy(()=>import("./component/sidebar.jsx"))
 
 
 function App() {
@@ -45,6 +47,7 @@ function App() {
           <Route path="/support" element={<SupportDetails />} />
           <Route path="/loginfailure" element={<LoginFailure/>} /> 
           <Route path="/servererror" element={<ServerErrorPage/>} />
+          <Route path="/sidebar" element={<Sidebar/>}/>
         </Routes>
 
       </Suspense>
