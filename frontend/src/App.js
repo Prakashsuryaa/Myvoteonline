@@ -1,10 +1,6 @@
 import "./App.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import React, { lazy, Suspense } from "react";
-
-
-
-
 // Lazy load the components
 const Register = lazy(() => import("./component/register.jsx"));
 const Footer = lazy(() => import("./component/footer.jsx"));
@@ -22,6 +18,8 @@ const LoginFailure = lazy(() => import("./component/loginfailure.jsx"));
 const ServerErrorPage = lazy(() => import("./component/servererror.jsx"));
 const Setting = lazy(() => import('./component/setting.jsx'))
 const Sidebar =lazy(()=>import("./component/sidebar.jsx"))
+const JsonUploader = lazy(() => import("./component/file.jsx"));
+const Dashboard2 =lazy(() => import("./component/dasboard2.jsx"));
 
 
 function App() {
@@ -44,6 +42,8 @@ function App() {
           <Route path="/support" element={<SupportDetails />} />
           <Route path="/loginfailure" element={<LoginFailure/>} /> 
           <Route path="/servererror" element={<ServerErrorPage/>} />
+          <Route path="/json" element={<JsonUploader/>}/>
+          <Route path="/dashboard2" element={<Dashboard2/>}/>
           <Route path="/sidebar" element={<Sidebar/>}/>
         </Routes>
 
