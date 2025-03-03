@@ -33,33 +33,33 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-orange-500 via-white to-green-900 px-4">
-      <div className="flex flex-col md:flex-row bg-[#dcdfdf] shadow-lg rounded-lg w-full max-w-[1100px] h-auto md:h-[500px] overflow-hidden">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-orange-500 via-white to-green-900 px-4 pb-8">
+      <div className="flex flex-col md:flex-row bg-[#dcdfdf] shadow-lg rounded-lg w-full max-w-[1100px] min-h-[500px] md:h-auto overflow-hidden">
         
         {/* Login Section */}
-        <div className="w-full md:w-1/2 p-8 md:p-12 flex flex-col justify-center">
-          <h2 className="text-3xl md:text-4xl font-semibold text-center text-[#165887]">Login</h2>
-          <form className="mt-6 md:mt-8" onSubmit={handleSubmit}>
+        <div className="w-full md:w-1/2 p-4 sm:p-6 md:p-12 flex flex-col justify-center">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold text-center text-[#165887]">Login</h2>
+          <form className="mt-4 sm:mt-6 md:mt-8 w-full flex flex-col items-center" onSubmit={handleSubmit}>
             <input
               type="email"
               name="email"
               placeholder="Email"
-              className="w-full p-4 md:p-5 border rounded-md mb-3 text-lg"
+              className="w-full max-w-sm p-3 sm:p-4 border rounded-md mb-3 text-lg"
               onChange={handleChange}
               required
             />
-            <div className="relative">
+            <div className="relative w-full max-w-sm">
               <input
                 type={showPassword ? "text" : "password"}
                 name="password"
                 placeholder="Password"
-                className="w-full p-4 md:p-5 border rounded-md mb-3 text-lg"
+                className="w-full p-3 sm:p-4 border rounded-md mb-3 text-lg"
                 onChange={handleChange}
                 required
               />
               <button
                 type="button"
-                className="absolute right-4 top-5 md:top-6 text-gray-500"
+                className="absolute right-4 top-3 sm:top-4 text-gray-500"
                 onClick={() => setShowPassword(!showPassword)}
               >
                 {showPassword ? "🙈" : "👁️"}
@@ -67,7 +67,7 @@ const Login = () => {
             </div>
             {error && <p className="text-red-600 text-sm mb-3">{error}</p>}
             <button
-              className={`w-full text-white p-4 md:p-5 rounded-md text-lg ${
+              className={`w-full max-w-sm text-white p-3 sm:p-4 rounded-md text-lg ${
                 loading ? "bg-gray-500 cursor-not-allowed" : "bg-blue-600 hover:bg-blue-700"
               }`}
               disabled={loading}
@@ -75,7 +75,7 @@ const Login = () => {
               {loading ? "Logging in..." : "Login"}
             </button>
           </form>
-          <p className="text-md md:text-lg text-gray-600 text-center mt-4 md:mt-5">
+          <p className="text-md sm:text-lg text-gray-600 text-center mt-4 sm:mt-5">
             Don't have an account?{" "}
             <a href="/register" className="text-[#165887] hover:underline">
               Register
@@ -83,11 +83,11 @@ const Login = () => {
           </p>
         </div>
 
-        {/* Image Slider Section with Right Padding */}
-        <div className="w-full md:w-1/2 flex items-center pr-6 md:pr-10">
+        {/* Image Slider Section */}
+        <div className="w-full md:w-1/2 flex items-center justify-center md:pr-6">
           <ImageSlider />
         </div>
-
+        
       </div>
     </div>
   );

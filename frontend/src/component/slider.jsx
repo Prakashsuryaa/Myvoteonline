@@ -44,7 +44,7 @@ const ImageSlider = () => {
   };
 
   return (
-    <div className="w-[900px] flex items-center justify-center bg-gray-200 overflow-hidden relative">
+    <div className="w-[900px] flex items-center justify-center overflow-hidden relative pb-6 mb-2">
       <Slider {...settings} className="w-full h-full">
         <div>
           <img src={img1} alt="image1" className="w-full h-auto rounded" />
