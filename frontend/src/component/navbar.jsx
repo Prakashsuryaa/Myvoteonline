@@ -22,7 +22,7 @@ const Navbar = () => {
             <select
               name="language"
               id="language"
-              className="cursor-pointer outline-none border-none bg-transparent"
+              className="cursor-pointer outline-none border-none bg-transparent p-1"
             >
               <option value="">ENGLISH</option>
               <option value="">HINDI</option>
