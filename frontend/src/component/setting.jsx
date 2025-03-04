@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Sidebar from "./sidebar";
 import img1 from "../../src/images/ravan.jpg";
+import Sidebar2 from "./sidebar2";
 
 const Setting = () => {
   const navigate = useNavigate();
@@ -27,7 +27,7 @@ const Setting = () => {
 
       {/* Sidebar */}
       <div className={`absolute md:relative md:block ${isSidebarOpen ? "block" : "hidden"} w-64`}>
-        <Sidebar />
+        <Sidebar2 />
       </div>
 
       {/* Main Content */}
@@ -43,7 +43,7 @@ const Setting = () => {
 
         {/* Profile Card */}
         <div className="w-full max-w-lg bg-gray-900 p-6 rounded-lg shadow-lg mt-16">
-          <div className="flex items-center jus space-x-4 mb-4">
+          <div className="flex items-center space-x-4 mb-4">
             <img src={img1} alt="Profile" className="w-16 h-16 rounded-full" />
             <div>
               <h2 className="text-white text-xl font-semibold">Sandip Ravan</h2>
