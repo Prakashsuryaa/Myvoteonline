@@ -20,33 +20,86 @@ const FileUpload = () => {
     excelInputRef.current.click();
   };
 
-  // Helper to download JSON file
-  const downloadJSON = (jsonData, fileName) => {
-    const jsonString = JSON.stringify(jsonData, null, 2);
-    const blob = new Blob([jsonString], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = fileName;
-    a.click();
-    URL.revokeObjectURL(url);
-    console.log(`✅ JSON File Downloaded: ${fileName}`);
+  // Helper to download Excel file
+  const downloadExcel = (jsonData, fileName) => {
+    const worksheet = XLSX.utils.json_to_sheet(jsonData);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet1');
+    XLSX.writeFile(workbook, fileName);
+    console.log(`✅ Excel File Downloaded: ${fileName}`);
   };
 
-  const handleExcelFileChange = (e) => {
+  const extractTextFromPDF = async (file) => {
+    try {
+      const reader = new FileReader();
+
+      reader.onload = async (evt) => {
+        try {
+          const typedArray = new Uint8Array(evt.target.result);
+          const pdf = await pdfjs.getDocument({ data: typedArray }).promise;
+
+          console.log(`📄 PDF Loaded Successfully with ${pdf.numPages} Pages`);
+
+          let extractedData = [];
+
+          for (let i = 1; i <= pdf.numPages; i++) {
+            const page = await pdf.getPage(i);
+            const textContent = await page.getTextContent();
+            const textItems = textContent.items.map((item) => item.str).join(' ');
+
+            // Preprocess text to remove extra spaces and newlines
+            const cleanedText = textItems.replace(/\s+/g, ' ').trim();
+
+            console.log(`🔍 Extracted Text from Page ${i}:`, cleanedText);
+
+            // Check if the cleaned text is empty
+            if (!cleanedText) {
+              console.warn(`❌ No text extracted from Page ${i}`);
+              continue;
+            }
+
+            // ✅ Updated Regex
+            const voterPattern = /नाम\s+([\s\S]+?)\nिपता\s+([\s\S]+?)\nमकान नं०\s+([\s\S]+?)\nआयु\s+(\d+)\s+(पुष|मिहला)/gu;
+            let match;
+            let pageData = [];
+            while ((match = voterPattern.exec(cleanedText)) !== null) {
+              pageData.push({
+                name: match[1].trim(),
+                father_name: match[2].trim(),
+                house_number: match[3].trim(),
+                age: parseInt(match[4], 10),
+                gender: match[5].trim()
+              });
+            }
+
+            if (pageData.length > 0) {
+              extractedData = extractedData.concat(pageData);
+            } else {
+              console.warn(`❌ No voter data extracted from Page ${i}`);
+            }
+          }
+
+          console.log('✅ Extracted Voter Data:', extractedData);
+          if (extractedData.length > 0) {
+            downloadExcel(extractedData, 'voters_list.xlsx');
+          } else {
+            console.error('❌ No Data Extracted. Please check the PDF format.');
+          }
+        } catch (error) {
+          console.error('❌ Error Extracting PDF Data:', error);
+        }
+      };
+
+      reader.readAsArrayBuffer(file);
+    } catch (error) {
+      console.error('❌ File Read Error:', error);
+    }
+  };
+
+  const handlePdfFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onload = (evt) => {
-        const data = new Uint8Array(evt.target.result);
-        const workbook = XLSX.read(data, { type: 'array' });
-        const worksheetName = workbook.SheetNames[0];
-        const worksheet = workbook.Sheets[worksheetName];
-        const jsonData = XLSX.utils.sheet_to_json(worksheet, { defval: '' });
-        console.log('Excel JSON Data:', jsonData);
-        downloadJSON(jsonData, 'excel_output.json');
-      };
-      reader.readAsArrayBuffer(file);
+      extractTextFromPDF(file);
     }
   };
 
@@ -86,14 +139,14 @@ const FileUpload = () => {
             type="file"
             accept=".pdf"
             ref={pdfInputRef}
-          
+            onChange={handlePdfFileChange}
             className="hidden"
           />
           <input
             type="file"
             accept=".xls,.xlsx"
             ref={excelInputRef}
-            onChange={handleExcelFileChange}
+            onChange={handlePdfFileChange} // Changed to handlePdfFileChange
             className="hidden"
           />
         </div>
