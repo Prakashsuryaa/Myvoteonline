@@ -11,15 +11,20 @@ const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [servicesDropdown, setServicesDropdown] = useState(false);
   const profileRef = useRef(null);
+  const servicesRef = useRef(null); // Ref for services dropdown
 
+  // Close Profile Dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (profileRef.current && !profileRef.current.contains(event.target)) {
         setOpen(false);
       }
+      if (servicesRef.current && !servicesRef.current.contains(event.target)) {
+        setServicesDropdown(false); // Close services dropdown when clicking outside
+      }
     };
+
     document.addEventListener("mousedown", handleClickOutside);
-    
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
@@ -93,7 +98,7 @@ const Navbar = () => {
           <li onClick={() => { navigate("/dashboard"); setMenuOpen(false); }} className="hover:text-blue-700 transition">Home</li>
           <li onClick={() => { navigate("/form"); setMenuOpen(false); }} className="hover:text-blue-700 transition">Form</li>
           <li onClick={() => { navigate("/search-page"); setMenuOpen(false); }} className="hover:text-blue-700 transition">Search Pages</li>
-          <li className="relative">
+          <li className="relative" ref={servicesRef}>
             <button onClick={() => setServicesDropdown(!servicesDropdown)} className="hover:text-blue-700 transition">
               Services
             </button>
