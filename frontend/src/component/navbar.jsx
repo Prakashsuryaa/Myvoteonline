@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { FaSearch, FaBars, FaTimes } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import img from "../../src/images/Img1.png";
@@ -10,6 +10,20 @@ const Navbar = () => {
   const [open, setOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [servicesDropdown, setServicesDropdown] = useState(false);
+  const profileRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (profileRef.current && !profileRef.current.contains(event.target)) {
+        setOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   return (
     <>
@@ -29,7 +43,7 @@ const Navbar = () => {
             </select>
           </div>
           {/* Profile */}
-          <div className="relative">
+          <div className="relative" ref={profileRef}>
             <div
               className="h-9 w-9 rounded-full overflow-hidden border border-gray-300 cursor-pointer"
               onClick={() => setOpen(!open)}
@@ -39,14 +53,20 @@ const Navbar = () => {
             {open && (
               <div className="absolute right-0 mt-2 w-40 bg-white shadow-lg rounded-md overflow-hidden z-50">
                 <ul className="text-sm text-gray-700">
-                <li>
-                    <button className="w-full px-4 py-2 text-left hover:bg-gray-100"> <a href="/dashboard2">Dashboard</a></button>
+                  <li>
+                    <button className="w-full px-4 py-2 text-left hover:bg-gray-100">
+                      <a href="/dashboard2">Dashboard</a>
+                    </button>
                   </li>
                   <li>
-                    <button className="w-full px-4 py-2 text-left hover:bg-gray-100"> <a href="/setting">Settings</a></button>
+                    <button className="w-full px-4 py-2 text-left hover:bg-gray-100">
+                      <a href="/setting">Settings</a>
+                    </button>
                   </li>
                   <li>
-                    <button className="w-full px-4 py-2 text-left hover:bg-gray-100"><a href="/" className="text-red-500">Logout</a></button>
+                    <button className="w-full px-4 py-2 text-left hover:bg-gray-100">
+                      <a href="/" className="text-red-500">Logout</a>
+                    </button>
                   </li>
                 </ul>
               </div>
