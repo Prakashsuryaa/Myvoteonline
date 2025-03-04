@@ -114,6 +114,8 @@
             </li>
             <li onClick={() => { navigate("/aboutus"); setMenuOpen(false); }} className="hover:text-blue-700 transition cursor-pointer">About Us</li>
             <li onClick={() => { navigate("/mediaform"); setMenuOpen(false); }} className="hover:text-blue-700 transition cursor-pointer">Candidate form</li>
+            <li onClick={() => { navigate("/fileupload"); setMenuOpen(false); }} className="hover:text-blue-700 cursor-pointer">Category</li>
+
 
           </ul>
           <div className="hidden md:flex items-center">
