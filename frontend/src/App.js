@@ -11,6 +11,9 @@ const Login = lazy(() => import("./component/login.jsx"));
 const Navbar = lazy(() => import("./component/navbar.jsx"));
 const VoterSlipPage = lazy(() => import("./component/voterslip.jsx"));
 const AboutUs = lazy(() => import("./component/aboutus.jsx"));
+const FileUpload = lazy(() => import("./component/category.jsx"));
+
+const PhoneListTable = lazy(() => import("./component/contactlist.jsx"));
 const Sidebar2 = lazy(() => import("./component/sidebar2.jsx"));
 const Socialmedia = lazy(() => import("./component/socialmedia.jsx"));
 const SupportDetails = lazy(() => import("./component/support.jsx"));
@@ -37,6 +40,7 @@ function App() {
           <Route path="/search-page" element={<SearchPage />} />
           <Route path="/slip" element={<VoterSlipPage />} />
           <Route path="/aboutus" element={<AboutUs />} />
+          <Route path="/fileupload" element={<FileUpload/>}/>
           <Route path="/setting" element={<Setting/>} />
           <Route path="/socialmedia" element={<Socialmedia />} />
           <Route path="/support" element={<SupportDetails />} />
