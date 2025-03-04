@@ -17,14 +17,15 @@ const VoterSlipPage = lazy(() => import("./component/voterslip.jsx"));
 const AboutUs = lazy(() => import("./component/aboutus.jsx"));
 const FileUpload = lazy(() => import("./component/category.jsx"));
 
-
+const PhoneListTable = lazy(() => import("./component/contactlist.jsx"));
 const Socialmedia = lazy(() => import("./component/socialmedia.jsx"));
 const SupportDetails = lazy(() => import("./component/support.jsx"));
 const LoginFailure = lazy(() => import("./component/loginfailure.jsx")); 
 const ServerErrorPage = lazy(() => import("./component/servererror.jsx"));
 const Setting = lazy(() => import('./component/setting.jsx'))
-const Sidebar =lazy(()=>import("./component/sidebar.jsx"))
-
+const JsonUploader = lazy(() => import("./component/file.jsx"));
+const Dashboard2 =lazy(() => import("./component/dasboard2.jsx"));
+const Sidebar = lazy(() => import("./component/sidebar.jsx"));
 
 function App() {
   return (
@@ -47,7 +48,10 @@ function App() {
           <Route path="/support" element={<SupportDetails />} />
           <Route path="/loginfailure" element={<LoginFailure/>} /> 
           <Route path="/servererror" element={<ServerErrorPage/>} />
+          <Route path="/json" element={<JsonUploader/>}/>
+          <Route path="/dashboard2" element={<Dashboard2/>}/>
           <Route path="/sidebar" element={<Sidebar/>}/>
+          <Route path="/contact-list" element={<PhoneListTable/>}/>
         </Routes>
 
       </Suspense>

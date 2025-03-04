@@ -1,14 +1,12 @@
-import React, { useRef } from "react";
-import Navbar from "./navbar";
-import Footer from "./footer";
-import img4 from "../../src/images/bg.jpg";
-import { FaFilePdf } from "react-icons/fa6";
-import { GrDocumentExcel } from "react-icons/gr";
-import * as XLSX from "xlsx";
-import { getDocument, GlobalWorkerOptions } from "pdfjs-dist";
-
-// Set the workerSrc for pdfjs-dist (ensure the version matches your installed package)
-GlobalWorkerOptions.workerSrc = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.11.338/pdf.worker.min.js";
+import React, { useRef } from 'react';
+import Navbar from './navbar';
+import Footer from './footer';
+import img4 from '../../src/images/bg.jpg';
+import { FaFilePdf } from 'react-icons/fa6';
+import { GrDocumentExcel } from 'react-icons/gr';
+import * as XLSX from 'xlsx';
+import * as pdfjs from 'pdfjs-dist';
+import 'pdfjs-dist/build/pdf.worker.mjs'; // No need to set workerSrc manually
 
 const FileUpload = () => {
   const pdfInputRef = useRef(null);
@@ -25,13 +23,14 @@ const FileUpload = () => {
   // Helper to download JSON file
   const downloadJSON = (jsonData, fileName) => {
     const jsonString = JSON.stringify(jsonData, null, 2);
-    const blob = new Blob([jsonString], { type: "application/json" });
+    const blob = new Blob([jsonString], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
+    const a = document.createElement('a');
     a.href = url;
     a.download = fileName;
     a.click();
     URL.revokeObjectURL(url);
+    console.log(`✅ JSON File Downloaded: ${fileName}`);
   };
 
   const handleExcelFileChange = (e) => {
@@ -40,44 +39,12 @@ const FileUpload = () => {
       const reader = new FileReader();
       reader.onload = (evt) => {
         const data = new Uint8Array(evt.target.result);
-        const workbook = XLSX.read(data, { type: "array" });
+        const workbook = XLSX.read(data, { type: 'array' });
         const worksheetName = workbook.SheetNames[0];
         const worksheet = workbook.Sheets[worksheetName];
-        const jsonData = XLSX.utils.sheet_to_json(worksheet, { defval: "" });
-        console.log("Excel JSON Data:", jsonData);
-        downloadJSON(jsonData, "excel_output.json");
-      };
-      reader.readAsArrayBuffer(file);
-    }
-  };
-
-  const handlePdfFileChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (evt) => {
-        const typedArray = new Uint8Array(evt.target.result);
-        getDocument(typedArray)
-          .promise.then((pdf) => {
-            let maxPages = pdf.numPages;
-            let countPromises = [];
-            for (let i = 1; i <= maxPages; i++) {
-              countPromises.push(
-                pdf.getPage(i).then((page) =>
-                  page.getTextContent().then((textContent) => {
-                    return textContent.items.map((item) => item.str).join(" ");
-                  })
-                )
-              );
-            }
-            Promise.all(countPromises).then((pagesText) => {
-              const fullText = pagesText.join("\n");
-              const jsonData = { text: fullText };
-              console.log("PDF JSON Data:", jsonData);
-              downloadJSON(jsonData, "pdf_output.json");
-            });
-          })
-          .catch((err) => console.error("Error processing PDF", err));
+        const jsonData = XLSX.utils.sheet_to_json(worksheet, { defval: '' });
+        console.log('Excel JSON Data:', jsonData);
+        downloadJSON(jsonData, 'excel_output.json');
       };
       reader.readAsArrayBuffer(file);
     }
@@ -90,8 +57,8 @@ const FileUpload = () => {
         className="flex flex-1 items-center justify-center p-4"
         style={{
           backgroundImage: `url(${img4})`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
         }}
       >
         <div className="bg-white w-full max-w-md rounded-lg shadow-lg p-6 transition-transform duration-300 hover:shadow-2xl hover:-translate-y-1">
@@ -119,7 +86,7 @@ const FileUpload = () => {
             type="file"
             accept=".pdf"
             ref={pdfInputRef}
-            onChange={handlePdfFileChange}
+          
             className="hidden"
           />
           <input
