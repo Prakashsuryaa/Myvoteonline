@@ -2,10 +2,6 @@ import "./App.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import React, { lazy, Suspense } from "react";
 
-
-
-
-
 // Lazy load the components
 const Register = lazy(() => import("./component/register.jsx"));
 const Footer = lazy(() => import("./component/footer.jsx"));
@@ -16,15 +12,17 @@ const Login = lazy(() => import("./component/login.jsx"));
 const Navbar = lazy(() => import("./component/navbar.jsx"));
 const VoterSlipPage = lazy(() => import("./component/voterslip.jsx"));
 const AboutUs = lazy(() => import("./component/aboutus.jsx"));
-
+const Sidebar2 = lazy(() => import("./component/sidebar2.jsx"));
 const Socialmedia = lazy(() => import("./component/socialmedia.jsx"));
 const SupportDetails = lazy(() => import("./component/support.jsx"));
 const LoginFailure = lazy(() => import("./component/loginfailure.jsx")); 
 const ServerErrorPage = lazy(() => import("./component/servererror.jsx"));
 const Setting = lazy(() => import('./component/setting.jsx'))
+const Sidebar =lazy(()=>import("./component/sidebar.jsx"))
 const JsonUploader = lazy(() => import("./component/file.jsx"));
 const Dashboard2 =lazy(() => import("./component/dasboard2.jsx"));
-const Sidebar = lazy(() => import("./component/sidebar.jsx"));
+const Mediaform =lazy(()=> import("./component/mediaform.jsx"));
+
 
 function App() {
   return (
@@ -49,6 +47,8 @@ function App() {
           <Route path="/json" element={<JsonUploader/>}/>
           <Route path="/dashboard2" element={<Dashboard2/>}/>
           <Route path="/sidebar" element={<Sidebar/>}/>
+          <Route path="/sidebar2" element={<Sidebar2/>}/>
+          <Route path="/mediaform" element={<Mediaform/>}/>
         </Routes>
 
       </Suspense>

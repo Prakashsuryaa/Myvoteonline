@@ -1,105 +1,79 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Menu, X } from "lucide-react";
+import img1 from "../../src/images/ravan.jpg";
+import Sidebar2 from "./sidebar2";
 
 const Setting = () => {
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
-  const handleLogout = () => {
-    navigate("/");
+  const handleTurnOff = () => {
+    setLoading(true);
+    setTimeout(() => {
+      navigate("/");
+    }, 2000);
   };
 
   return (
-    <div className="flex h-screen bg-gray-900 text-white">
-      {/* Sidebar */}
-      <aside
-        className={`md:flex md:flex-col md:w-64 bg-gray-800 p-5 border-r border-gray-700 z-20 fixed md:relative h-full ${
-          isSidebarOpen ? "translate-x-0" : "-translate-x-full"
-        } md:translate-x-0 transition-transform duration-300 ease-in-out`}
-      >
-        <div className="flex justify-between items-center mb-6 md:hidden">
-          <button onClick={() => setIsSidebarOpen(false)} className="text-white">
-            <X size={24} />
-          </button>
-        </div>
-        <ul className="space-y-4">
-          <h1 className="text-xl font-semibold">⚙ Settings</h1>
-          {[
-            "User  Name",
-            "Privacy and security",
-            "Downloads",
-            "Reset settings",
-            "Password",
-            "Change Password",
-            "Feedback",
-            "Help",
-            "Help Center",
-            "Privacy",
-            "Terms",
-          ].map((item, index) => (
-            <li
-              key={index}
-              className="cursor-pointer text-gray-300 hover:text-white"
-            >
-              {item}
-            </li>
-          ))}
-          <li>
-            <button
-              onClick={handleLogout}
-              className="text-left w-full text-gray-300 hover:text-white"
-            >
-              Log Out
-            </button>
-          </li>
-        </ul>
-      </aside>
-
-      {/* Mobile Menu Button */}
+    <div className="flex h-screen">
+      {/* Sidebar Toggle Button for Mobile (with spacing) */}
       <button
-        className="absolute top-4 left-4 md:hidden text-white"
-        onClick={() => setIsSidebarOpen(true)}
+        className="md:hidden fixed top-2 left-4 p-3 bg-blue-600 text-white rounded-lg z-50"
+        onClick={() => setIsSidebarOpen(!isSidebarOpen)}
       >
-        <Menu size={24} />
+        {isSidebarOpen ? "✖" : "☰"}
       </button>
 
+      {/* Sidebar */}
+      <div className={`absolute md:relative md:block ${isSidebarOpen ? "block" : "hidden"} w-64`}>
+        <Sidebar2 />
+      </div>
+
       {/* Main Content */}
-      <main className="flex-1 flex flex-col items-center justify-start p-4 md:p-8 md:ml-64">
-        {/* Header */}
-        <div className="w-full text-center mb-6 md:mb-8">
-          <h1 className="text-2xl font-semibold">⚙ Settings</h1>
+      <div className="flex-1 bg-gray-800 flex flex-col items-center justify-start p-4 sm:p-6">
+        {/* Search Bar with spacing on mobile */}
+        <div className="mb-4 w-full max-w-md mt-12 sm:mt-0">
+          <input
+            type="text"
+            placeholder="Search settings"
+            className="w-full p-3 rounded-lg bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
         </div>
 
-        {/* Search Box */}
-        <div className="w-full flex justify-center mb-6">
-          <div className="w-full md:w-2/3 lg:w-1/2 xl:w-1/3">
-            <input
-              type="text"
-              placeholder="Search settings"
-              className="w-full p-3 bg-gray-700 text-white rounded-md focus:outline-none"
-            />
-          </div>
-        </div>
-
-        {/* Profile Section */}
-        <div className="bg-gray-800 p-5 rounded-lg shadow-md w-full md:w-2/3 lg:w-1/2 xl:w-1/3 mx-auto text-center mb-6">
-          <div className="flex flex-col items-center space-y-3">
-            <img
-              src="https://via.placeholder.com/50"
-              alt="Profile"
-              className="w-16 h-16 rounded-full"
-            />
+        {/* Profile Card */}
+        <div className="w-full max-w-lg bg-gray-900 p-6 rounded-lg shadow-lg mt-16">
+          <div className="flex items-center space-x-4 mb-4">
+            <img src={img1} alt="Profile" className="w-16 h-16 rounded-full" />
             <div>
-              <h2 className="text-lg font-semibold">Sandip Ravan</h2>
-              <p className="text-gray-400 text-sm">Syncing to sandipravn95@gmail.com</p>
+              <h2 className="text-white text-xl font-semibold">Sandip Ravan</h2>
+              <p className="text-gray-400 text-sm">Syncing to sandipravan95@gmail.com</p>
             </div>
-            <button className="mt-4 bg-blue-600 px-4 py-2 rounded-md">
+          </div>
+
+          {/* Loader or Button */}
+          {loading ? (
+            <div className="flex justify-center items-center">
+              <div className="w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+            </div>
+          ) : (
+            <button
+              className="bg-blue-600 text-white px-4 py-2 rounded-lg mb-4 w-full"
+              onClick={handleTurnOff}
+            >
               Turn off
             </button>
+          )}
+
+          {/* Settings Options */}
+          <div className="space-y-3 text-center sm:text-left">
+            <div className="p-4 bg-gray-800 rounded-lg text-white">Sync and Google services</div>
+            <div className="p-4 bg-gray-800 rounded-lg text-white">Manage your Google Account</div>
+            <div className="p-4 bg-gray-800 rounded-lg text-white">Customize your Chrome profile</div>
+            <div className="p-4 bg-gray-800 rounded-lg text-white">Import bookmarks and settings</div>
           </div>
         </div>
-      </main>
+      </div>
     </div>
   );
 };
