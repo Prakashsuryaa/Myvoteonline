@@ -1,137 +1,92 @@
-import React, { useRef } from 'react';
-import Navbar from './navbar';
-import Footer from './footer';
-import img4 from '../../src/images/bg.jpg';
-import { FaFilePdf } from 'react-icons/fa6';
-import { GrDocumentExcel } from 'react-icons/gr';
-import * as XLSX from 'xlsx';
-import * as pdfjs from 'pdfjs-dist';
-import 'pdfjs-dist/build/pdf.worker.mjs';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
+import img from "../images/bhushan.jpg";
+import { 
+    FaBars, FaHome, FaFileImport, FaServer, FaFileExport, FaPhoneVolume, FaSms, 
+    FaWhatsapp, FaShareAlt, FaUserPlus, FaSlidersH 
+} from "react-icons/fa";
+import { IoMdSettings } from "react-icons/io";
+import { IoPerson, IoLogOut } from "react-icons/io5";
+import { RiLockPasswordLine } from "react-icons/ri";
+import { MdCategory } from "react-icons/md";
 
-const FileUpload = () => {
-  const pdfInputRef = useRef(null);
+const Sidebar = () => {
+    const [isOpen, setIsOpen] = useState(false);
+    const navigate = useNavigate();
 
-  const handlePdfClick = () => {
-    pdfInputRef.current.click();
-  };
+    const handleLogout = () => {
+        localStorage.removeItem("userToken");
+        navigate("/");
+    };
 
-  const downloadExcel = (jsonData, fileName) => {
-    const worksheet = XLSX.utils.json_to_sheet(jsonData);
-    const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet1');
-    XLSX.writeFile(workbook, fileName);
-    console.log(`✅ Excel File Downloaded: ${fileName}`);
-  };
-
-  const extractTextFromPDF = async (file) => {
-    try {
-      const reader = new FileReader();
-  
-      reader.onload = async (evt) => {
-        try {
-          const typedArray = new Uint8Array(evt.target.result);
-          const pdf = await pdfjs.getDocument({ data: typedArray }).promise;
-  
-          console.log(`📄 PDF Loaded Successfully with ${pdf.numPages} Pages`);
-  
-          let extractedData = [];
-  
-          for (let i = 1; i <= pdf.numPages; i++) {
-            const page = await pdf.getPage(i);
-            const textContent = await page.getTextContent();
-            
-            // Log extracted raw text line-by-line
-            const lines = textContent.items.map(item => item.str);
-            console.log(`🔍 Extracted Text from Page ${i}:`, lines.join("\n")); 
-  
-            // If text is empty, log a warning
-            if (lines.length === 0) {
-              console.warn(`❌ No text extracted from Page ${i}`);
-              continue;
-            }
-  
-            // Process text
-            const cleanedText = lines.join(' ').replace(/\s+/g, ' ').trim();
-  
-            // Your regex-based extraction logic
-            const voterPattern = /नाम\s+([\s\S]+?)\nिपता\s+([\s\S]+?)\nमकान नं०\s+([\s\S]+?)\nआयु\s+(\d+)\s+(पुष|मिहला)/gu;
-            let match;
-            let pageData = [];
-            while ((match = voterPattern.exec(cleanedText)) !== null) {
-              pageData.push({
-                name: match[1].trim(),
-                father_name: match[2].trim(),
-                house_number: match[3].trim(),
-                age: parseInt(match[4], 10),
-                gender: match[5].trim()
-              });
-            }
-  
-            if (pageData.length > 0) {
-              extractedData = extractedData.concat(pageData);
-            } else {
-              console.warn(`❌ No voter data extracted from Page ${i}`);
-            }
-          }
-  
-          console.log('✅ Extracted Voter Data:', extractedData);
-          if (extractedData.length > 0) {
-            downloadExcel(extractedData, 'voters_list.xlsx');
-          } else {
-            console.error('❌ No Data Extracted. Please check the PDF format.');
-          }
-        } catch (error) {
-          console.error('❌ Error Extracting PDF Data:', error);
-        }
-      };
-  
-      reader.readAsArrayBuffer(file);
-    } catch (error) {
-      console.error('❌ File Read Error:', error);
-    }
-  };
-  
-  const handlePdfFileChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      extractTextFromPDF(file);
-    }
-  };
-
-  return (
-    <div className="flex flex-col min-h-screen">
-      <Navbar />
-      <div
-        className="flex flex-1 items-center justify-center p-4"
-        style={{
-          backgroundImage: `url(${img4})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-        }}
-      >
-        <div className="bg-white w-full max-w-md rounded-lg shadow-lg p-6 transition-transform duration-300 hover:shadow-2xl hover:-translate-y-1">
-          <h2 className="text-center text-2xl font-bold mb-4 text-gray-800">Upload File</h2>
-          <div className="border-2 border-dashed border-gray-300 rounded-md p-6 flex justify-center">
-            <button
-              onClick={handlePdfClick}
-              className="px-6 py-8 rounded-md text-red-500 font-semibold transition-transform duration-300 transform hover:scale-105 hover:text-red-600 focus:outline-none focus:ring-2 focus:ring-red-300"
+    return (
+        <>
+            {/* Hamburger Button for Small Screens */}
+            <button 
+                className="md:hidden text-white bg-blue-600 fixed rounded-lg z-50" 
+                onClick={() => setIsOpen(!isOpen)}
             >
-              <FaFilePdf size={50} className="ml-4" />
-              <span className="block mt-2 text-sm">Upload PDF</span>
+                <FaBars size={30} />
             </button>
-          </div>
-          <input
-            type="file"
-            accept=".pdf"
-            ref={pdfInputRef}
-            onChange={handlePdfFileChange}
-            className="hidden"
-          />
-        </div>
-      </div>
-      <Footer />
-    </div>
-  );
+
+            {/* Sidebar with 30px margin from top */}
+            <aside className={`w-64 bg-white text-black shadow-lg font-[Poppins] overflow-auto fixed md:relative transition-all duration-300
+                ${isOpen ? "left-0" : "-left-64"} md:left-0 h-full z-40`}>
+                
+                {/* Profile Section */}
+                <div className="bg-blue-600 h-44 flex flex-col items-center justify-center relative">
+                    <div className="w-16 h-16 bg-white rounded-full absolute top-10 left-4 border-2 border-gray-400">
+                        <img src={img} className="w-16 h-16 bg-white rounded-full" alt="User" />
+                    </div>
+                    <p className="text-white font-semibold mt-24 mr-32">Bhushan</p>
+                    <p className="text-white font-semibold mr-28">9053068979</p>
+                </div>
+                
+                {/* Menu Items */}
+                <ul className="space-y-4 p-5">
+                    {menuItems.map(({ icon: Icon, text, path }, index) => (
+                        <li key={index} className="flex items-center gap-3 p-3 rounded-lg cursor-pointer transition-all duration-300 hover:bg-gray-300 hover:text-blue-600">
+                            <Icon className="text-lg" />
+                            <a href={path} className="text-sm font-medium">{text}</a>
+                        </li>
+                    ))}
+
+                    <hr className="border-gray-400 my-4" />
+
+                    {/* Share & Logout */}
+                    <li className="flex items-center gap-3 p-3 rounded-lg cursor-pointer transition-all duration-300 hover:bg-gray-300 hover:text-blue-600">
+                        <FaShareAlt className="text-lg" />
+                        <a href="#" className="text-sm font-medium">Share</a>
+                    </li>
+                    <li 
+                        className="flex items-center gap-3 p-3 rounded-lg cursor-pointer transition-all duration-300 hover:bg-gray-300 hover:text-red-500"
+                        onClick={handleLogout} // Call Logout Function
+                    >
+                        <IoLogOut className="text-lg text-red-500" />
+                        <span className="text-sm font-medium text-red-500">Logout</span>
+                    </li>
+                </ul>
+            </aside>
+        </>
+    );
 };
 
-export default FileUpload;
+const menuItems = [
+    { icon: FaHome, text: "Home", path: "/" },
+    { icon: FaFileImport, text: "Import Updated Data", path: "/import" },
+    { icon: FaServer, text: "Update Data to Server", path: "/update" },
+    { icon: FaFileExport, text: "Export Data", path: "/export" },
+    { icon: FaSlidersH, text: "Update Slider", path: "/slider" },
+    { icon: FaPhoneVolume, text: "Contacts", path: "/contacts" },
+    { icon: FaServer, text: "Summary", path: "/summary" },
+    { icon: IoMdSettings, text: "Settings", path: "/settings" },
+    { icon: FaUserPlus, text: "Add Volunteer", path: "/add-volunteer" },
+    { icon: IoPerson, text: "My Volunteers", path: "/my-volunteers" },
+    { icon: MdCategory, text: "Castes", path: "/castes" },
+    { icon: FaSms, text: "Send SMS", path: "/sms" },
+    { icon: FaPhoneVolume, text: "Voice Calls", path: "/voice-calls" },
+    { icon: FaWhatsapp, text: "Bulk WhatsApp", path: "/whatsapp" },
+    { icon: RiLockPasswordLine, text: "Change Password", path: "/change-password" },
+];
+
+export default Sidebar;
