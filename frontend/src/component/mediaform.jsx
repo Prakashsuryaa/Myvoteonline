@@ -1,5 +1,6 @@
 import React from "react";
 import img from "../images/bg.jpg";
+import Navbar from "./navbar";
 
 const Mediaform = () => {
   const handleSubmit = (event) => {
@@ -9,9 +10,12 @@ const Mediaform = () => {
   };
 
   return (
+    <>
+    <Navbar/>
     <div
       className="flex justify-center items-center min-h-screen bg-gray-900 p-6 bg-cover bg-center"
       style={{ backgroundImage: `url(${img})` }}
+      
     >
       <form
         onSubmit={handleSubmit}
@@ -47,6 +51,7 @@ const Mediaform = () => {
         </div>
       </form>
     </div>
+    </>
   );
 };
 

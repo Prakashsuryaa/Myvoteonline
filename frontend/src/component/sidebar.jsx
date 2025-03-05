@@ -23,7 +23,7 @@ const Sidebar = () => {
         <>
             {/* Hamburger Button for Small Screens */}
             <button 
-                className="md:hidden text-white bg-blue-600 fixed rounded-lg z-50" 
+                className="md:hidden fixed rounded-lg z-50" 
                 onClick={() => setIsOpen(!isOpen)}
             >
                 <FaBars size={30} />

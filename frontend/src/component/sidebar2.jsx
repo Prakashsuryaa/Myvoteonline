@@ -10,6 +10,7 @@ const Sidebar2 = () => {
   const handleLogout = () => {
     console.log("User logged out");
     navigate("/");
+    
   };
 
   return (

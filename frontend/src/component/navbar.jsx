@@ -11,9 +11,9 @@
     const [menuOpen, setMenuOpen] = useState(false);
     const [servicesDropdown, setServicesDropdown] = useState(false);
     const profileRef = useRef(null);
-    const servicesRef = useRef(null); // Ref for services dropdown
+    const servicesRef = useRef(null); 
 
-    // Close Profile Dropdown when clicking outside
+    
     useEffect(() => {
       const handleClickOutside = (event) => {
         if (profileRef.current && !profileRef.current.contains(event.target)) {
