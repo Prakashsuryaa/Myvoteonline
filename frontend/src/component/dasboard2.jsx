@@ -26,8 +26,8 @@ const Dashboard2 = () => {
                         placeholder="Enter Name, Door No" 
                         className="flex-1 p-2 border rounded-md outline-none"
                     />
-                    <button className="bg-blue-500 text-white px-4 py-2 rounded-md flex items-center gap-1">
-                        <FaSearch /> Search
+                    <button className="bg-blue-500 text-white px-1 py-2 rounded-md flex items-center gap-1">
+                        <FaSearch className="size-3.5"/> Search
                     </button>
                 </div>
 
