@@ -65,11 +65,6 @@
                     </li>
                     <li>
                       <button className="w-full px-4 py-2 text-left hover:bg-gray-100">
-                        <a href="/setting">Settings</a>
-                      </button>
-                    </li>
-                    <li>
-                      <button className="w-full px-4 py-2 text-left hover:bg-gray-100">
                         <a href="/" className="text-red-500">Logout</a>
                       </button>
                     </li>
@@ -98,6 +93,8 @@
             <li onClick={() => { navigate("/dashboard"); setMenuOpen(false); }} className="hover:text-blue-700 transition cursor-pointer">Home</li>
             <li onClick={() => { navigate("/form"); setMenuOpen(false); }} className="hover:text-blue-700 transition cursor-pointer">Form</li>
             <li onClick={() => { navigate("/search-page"); setMenuOpen(false); }} className="hover:text-blue-700 transition cursor-pointer">Search Pages</li>
+            <li onClick={() => { navigate("/mediaform"); setMenuOpen(false); }} className="hover:text-blue-700 transition cursor-pointer">Candidate form</li>
+            <li onClick={() => { navigate("/fileupload"); setMenuOpen(false); }} className="hover:text-blue-700 cursor-pointer">Category</li>
             <li className="relative" ref={servicesRef}>
               <button onClick={() => setServicesDropdown(!servicesDropdown)} className="hover:text-blue-700 transition">
                 Services
@@ -113,8 +110,7 @@
               )}
             </li>
             <li onClick={() => { navigate("/aboutus"); setMenuOpen(false); }} className="hover:text-blue-700 transition cursor-pointer">About Us</li>
-            <li onClick={() => { navigate("/mediaform"); setMenuOpen(false); }} className="hover:text-blue-700 transition cursor-pointer">Candidate form</li>
-            <li onClick={() => { navigate("/fileupload"); setMenuOpen(false); }} className="hover:text-blue-700 cursor-pointer">Category</li>
+          
 
 
           </ul>
