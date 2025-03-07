@@ -1,128 +1,115 @@
-  import React, { useState, useRef, useEffect } from "react";
-  import { FaSearch, FaBars, FaTimes } from "react-icons/fa";
-  import { useNavigate } from "react-router-dom";
-  import img from "../../src/images/Img1.png";
-  import img3 from "../../src/images/img3.png";
-  import img4 from "../../src/images/img4.png";
+import React, { useState, useRef, useEffect } from "react";
+import { FaSearch, FaBars, FaTimes } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
+import img from "../../src/images/Img1.png";
+import img3 from "../../src/images/img3.png";
+import img4 from "../../src/images/img4.png";
 
-  const Navbar = () => {
-    const navigate = useNavigate();
-    const [open, setOpen] = useState(false);
-    const [menuOpen, setMenuOpen] = useState(false);
-    const [servicesDropdown, setServicesDropdown] = useState(false);
-    const profileRef = useRef(null);
-    const servicesRef = useRef(null); 
+const Navbar = () => {
+  const navigate = useNavigate();
+  const [open, setOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [servicesDropdown, setServicesDropdown] = useState(false);
 
-    
-    useEffect(() => {
-      const handleClickOutside = (event) => {
-        if (profileRef.current && !profileRef.current.contains(event.target)) {
-          setOpen(false);
-        }
-        if (servicesRef.current && !servicesRef.current.contains(event.target)) {
-          setServicesDropdown(false); // Close services dropdown when clicking outside
-        }
-      };
+  const profileRef = useRef(null);
+  const servicesRef = useRef(null);
+  const menuRef = useRef(null);
 
-      document.addEventListener("mousedown", handleClickOutside);
-      return () => {
-        document.removeEventListener("mousedown", handleClickOutside);
-      };
-    }, []);
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (profileRef.current && !profileRef.current.contains(event.target)) {
+        setOpen(false);
+      }
+      if (servicesRef.current && !servicesRef.current.contains(event.target)) {
+        setServicesDropdown(false);
+      }
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        setMenuOpen(false);
+      }
+    };
 
-    return (
-      <>
-        {/* Navbar Section */}
-        <div className="h-12 w-full bg-[#165887] flex items-center justify-between px-6 md:px-10 lg:px-14 relative">
-          <div></div>
-          <div className="flex items-center gap-x-6 ml-auto">
-            {/* Language Selector */}
-            <div className="text-black bg-[#FEFCFC] h-7 px-4 rounded-lg">
-              <select
-                name="language"
-                id="language"
-                className="cursor-pointer outline-none border-none bg-transparent p-1"
-              >
-                <option value="">ENGLISH</option>
-                <option value="">HINDI</option>
-              </select>
-            </div>
-            {/* Profile */}
-            <div className="relative" ref={profileRef}>
-              <div
-                className="h-9 w-9 rounded-full overflow-hidden border border-gray-300 cursor-pointer"
-                onClick={() => setOpen(!open)}
-              >
-                <img src={img4} alt="Profile" className="h-full w-full object-cover" />
-              </div>
-              {open && (
-                <div className="absolute right-0 mt-2 w-40 bg-white shadow-lg rounded-md overflow-hidden z-50">
-                  <ul className="text-sm text-gray-700">
-                    <li>
-                      <button className="w-full px-4 py-2 text-left hover:bg-gray-100">
-                        <a href="/dashboard2">Dashboard</a>
-                      </button>
-                    </li>
-                    <li>
-                      <button className="w-full px-4 py-2 text-left hover:bg-gray-100">
-                        <a href="/" className="text-red-500">Logout</a>
-                      </button>
-                    </li>
-                  </ul>
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
-        {/* Main Logo Section */}
-        <div className="flex flex-col md:flex-row items-center justify-between w-full px-8 md:px-12 lg:px-14 py-4 gap-6">
-          <div className="flex items-center gap-6 md:gap-10">
-            <img src={img} alt="Election Logo" className="h-16 md:h-20 w-auto" />
-            <span className="text-xl md:text-2xl font-bold text-[#165887] font-sans">My Vote Online</span>
-          </div>
-          <img src={img3} className="h-16 md:h-20 w-auto" alt="India logo" />
-        </div>
-
-        {/* Navigation Bar */}
-        <nav className="text-[#165887] sticky top-0 w-full h-[50px] flex justify-between items-center border border-[#E8FAFC] bg-[#E8FAFC] z-50 px-8 md:px-12 lg:px-14">
-          <button className="md:hidden text-[#165887]" onClick={() => setMenuOpen(!menuOpen)}>
+  return (
+    <>
+      {/* Navbar Top Bar */}
+      <div className="h-12 w-full bg-[#165887] flex items-center justify-between px-4 md:px-8 relative">
+        <div className="flex items-center gap-4">
+          <button className="md:hidden text-white" onClick={() => setMenuOpen(!menuOpen)}>
             {menuOpen ? <FaTimes size={24} /> : <FaBars size={24} />}
           </button>
-          <ul className={`absolute md:static top-[50px] left-0 w-full bg-[#E8FAFC] md:bg-transparent md:flex md:items-center md:space-x-10 text-lg font-semibold ${menuOpen ? 'flex flex-col p-6' : 'hidden md:flex'}`}>
-            <li onClick={() => { navigate("/dashboard"); setMenuOpen(false); }} className="hover:text-blue-700 transition cursor-pointer">Home</li>
-            <li onClick={() => { navigate("/form"); setMenuOpen(false); }} className="hover:text-blue-700 transition cursor-pointer">Form</li>
-            <li onClick={() => { navigate("/search-page"); setMenuOpen(false); }} className="hover:text-blue-700 transition cursor-pointer">Search Pages</li>
-            <li onClick={() => { navigate("/mediaform"); setMenuOpen(false); }} className="hover:text-blue-700 transition cursor-pointer">Candidate form</li>
-            <li onClick={() => { navigate("/fileupload"); setMenuOpen(false); }} className="hover:text-blue-700 cursor-pointer">Category</li>
-            <li className="relative" ref={servicesRef}>
-              <button onClick={() => setServicesDropdown(!servicesDropdown)} className="hover:text-blue-700 transition">
-                Services
-              </button>
-              {servicesDropdown && (
-                <ul className="absolute left-0 mt-2 w-40 bg-white shadow-lg rounded-md overflow-hidden z-50 text-sm text-gray-700">
-                  <li>
-                    <button onClick={() => { navigate("/socialmedia"); setServicesDropdown(false); }} className="w-full px-4 py-2 text-left hover:bg-gray-100">
-                      Social Media
-                    </button> 
-                  </li>
-                </ul>
-              )}
-            </li>
-            <li onClick={() => { navigate("/aboutus"); setMenuOpen(false); }} className="hover:text-blue-700 transition cursor-pointer">About Us</li>
-          
-
-
-          </ul>
-          <div className="hidden md:flex items-center">
-            <button className="flex items-center gap-3 text-[#165887] text-sm px-5 py-2 rounded-xl bg-[#FBF6F6]">
-              <FaSearch aria-label="Search" />
-              <input type="search" placeholder="Search Page" className="border-none outline-none bg-transparent" />
-            </button>
+        </div>
+        <div className="flex items-center gap-x-4 ml-auto">
+          <div className="text-black bg-[#FEFCFC] h-7 px-3 rounded-lg ">
+          <select className="cursor-pointer bg-transparent text-xs p-1 outline-none border-none appearance-none focus:ring-0">
+              <option>ENGLISH</option>
+              <option>HINDI</option>
+            </select>
           </div>
-        </nav>
-      </>
-    );
-  };
+          <div className="relative" ref={profileRef}>
+            <div
+              className="h-8 w-8 rounded-full overflow-hidden border cursor-pointer"
+              onClick={() => setOpen(!open)}
+            >
+              <img src={img4} alt="Profile" className="h-full w-full object-cover" />
+            </div>
+            {open && (
+              <div className="absolute right-0 mt-2 w-36 bg-white shadow-lg rounded-md overflow-hidden z-50">
+                <ul className="text-sm text-gray-700">
+                  <li><button className="w-full px-3 py-2 text-left hover:bg-gray-100" onClick={() => navigate("/dashboard2")}>Dashboard</button></li>
+                  <li><button className="w-full px-3 py-2 text-left hover:bg-gray-100 text-red-500" onClick={() => navigate("/")}>Logout</button></li>
+                </ul>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
 
-  export default Navbar;
+      {/* Logo Section */}
+      <div className="flex flex-col md:flex-row items-center justify-between w-full px-6 py-3 gap-4">
+        <div className="flex items-center gap-4">
+          <img src={img} alt="Logo" className="h-[4.3rem]  w-auto" />
+          <span className="text-[1.5rem] font-bold text-[#165887]">My Vote Online</span>
+        </div>
+        <img src={img3} className="h-[4.3rem] w-auto" alt="India logo" />
+      </div>
+
+      {/* Navigation Bar */}
+      <nav className="w-full h-[50px] flex items-center border bg-[#E8FAFC] px-6 md:px-10">
+        <ul 
+          ref={menuRef} 
+          className={`absolute md:static top-[50px] left-0 w-full bg-[#E8FAFC] md:flex md:space-x-8  font-semibold transition-all duration-300 ease-in-out ${
+            menuOpen ? "flex flex-col p-4" : "hidden md:flex"
+          }`}
+        >
+          <li className="cursor-pointer hover:text-blue-700" onClick={() => navigate("/dashboard")}>Home</li>
+          <li className="cursor-pointer hover:text-blue-700" onClick={() => navigate("/form")}>Form</li>
+          <li className="cursor-pointer hover:text-blue-700" onClick={() => navigate("/search-page")}>Search Pages</li>
+          <li className="cursor-pointer hover:text-blue-700" onClick={() => navigate("/mediaform")}>Candidate Form</li>
+          <li className="cursor-pointer hover:text-blue-700" onClick={() => navigate("/fileupload")}>Category</li>
+          <li className="relative" ref={servicesRef}>
+            <button onClick={() => setServicesDropdown(!servicesDropdown)} className="hover:text-blue-700">Services</button>
+            {servicesDropdown && (
+              <ul className="absolute left-0 mt-2 w-36 bg-white shadow-lg rounded-md z-50 text-sm">
+                <li><button onClick={() => navigate("/socialmedia")} className="w-full px-3 py-2 hover:bg-gray-100">Social Media</button></li>
+              </ul>
+            )}
+          </li>
+          <li className="cursor-pointer hover:text-blue-700" onClick={() => navigate("/aboutus")}>About Us</li>
+        </ul>
+        <div className="hidden md:flex items-center">
+          <button className="flex items-center gap-2 text-[#165887] text-xs px-4 py-2 rounded-xl bg-[#FBF6F6]">
+            <FaSearch />
+            <input type="search" placeholder="Search Page" className="border-none outline-none bg-transparent w-full" />
+          </button>
+        </div>
+      </nav>
+    </>
+  );
+};
+
+export default Navbar;
