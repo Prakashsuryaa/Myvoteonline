@@ -1,14 +1,47 @@
-// Dashboard2.js
-import React from "react";
-import img from "../images/bhushan.jpg";
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import Sidebar from "./sidebar";
+
+// Import Images
+import img1 from "../images/img2.jpg";
+import img2 from "../images/socialmedia.jpg";
+import img3 from "../images/support.jpg";
+
+// Import Icons
 import { 
     FaSearch, FaUser, FaList, FaMapMarkerAlt, FaPhone, FaUsers, FaLayerGroup, FaPalette, 
     FaCheckCircle, FaCopy, FaCalendarCheck, FaThumbsUp, FaThumbsDown, FaCertificate, FaCrown, FaHandshake 
 } from "react-icons/fa";
-import Sidebar from "./sidebar"; // Ensure the correct import path
-import { Link } from "react-router-dom";
 
 const Dashboard2 = () => {
+    const [searchQuery, setSearchQuery] = useState("");
+
+    const handleSearch = (event) => {
+        setSearchQuery(event.target.value.toLowerCase());
+    };
+
+    // Filter menu items based on search
+    const filteredMenuItems = menuItems.filter(item => 
+        item.label.toLowerCase().includes(searchQuery)
+    );
+
+    // Slider settings
+    const sliderSettings = {
+        dots: true,
+        infinite: true,
+        speed: 500,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        autoplay: true,
+        autoplaySpeed: 3000,
+    };
+
+    // Images for the slider
+    const sliderImages = [img1, img2, img3];
+
     return (
         <div className="flex h-screen">
             {/* Sidebar */}
@@ -16,26 +49,35 @@ const Dashboard2 = () => {
 
             {/* Main Content */}
             <div className="flex-1 p-6 bg-gray-100 overflow-auto">
-                {/* Image Div */}
-                <div className="h-60 w-auto border overflow-hidden mt-4">
-                    <img src={img} alt="Dashboard" className="w-full h-full object-cover" />
-                </div>
                 
+                {/* Image Slider */}
+                <div className="mb-4">
+                    <Slider {...sliderSettings}>
+                        {sliderImages.map((src, index) => (
+                            <div key={index} className="h-48 w-full overflow-hidden">
+                                <img src={src} alt={`Slide ${index + 1}`} className="w-full h-full object-cover" />
+                            </div>
+                        ))}
+                    </Slider>
+                </div>
+
                 {/* Search Bar */}
                 <div className="bg-white shadow-md p-4 rounded-lg flex items-center gap-3 mt-4">
                     <input 
                         type="text" 
                         placeholder="Enter Name, Door No" 
                         className="flex-1 p-2 border rounded-md outline-none"
+                        value={searchQuery}
+                        onChange={handleSearch}
                     />
-                    <button className="bg-blue-500 text-white px-1 py-2 rounded-md flex items-center gap-1">
+                    <button className="bg-blue-500 text-white px-3 py-2 rounded-md flex items-center gap-1">
                         <FaSearch className="size-3.5"/> Search
                     </button>
                 </div>
 
                 {/* Menu Grid */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
-                    {menuItems.map((item, index) => (
+                    {filteredMenuItems.map((item, index) => (
                         <Link 
                             key={index} 
                             to={item.path} 

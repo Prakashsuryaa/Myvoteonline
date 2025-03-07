@@ -21,6 +21,8 @@ const Sidebar =lazy(()=>import("./component/sidebar.jsx"))
 const JsonUploader = lazy(() => import("./component/file.jsx"));
 const Dashboard2 =lazy(() => import("./component/dasboard2.jsx"));
 const Mediaform =lazy(()=> import("./component/mediaform.jsx"));
+const PollingAgent =lazy(()=> import("./component/pollingagent.jsx"));
+
 
 
 function App() {
@@ -47,6 +49,7 @@ function App() {
           <Route path="/dashboard2" element={<Dashboard2/>}/>
           <Route path="/sidebar" element={<Sidebar/>}/>
           <Route path="/mediaform" element={<Mediaform/>}/>
+          <Route path="/polling-agent" element={<PollingAgent/>}/>
         </Routes>
 
       </Suspense>
