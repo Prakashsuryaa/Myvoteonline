@@ -6,7 +6,7 @@ import img4 from "../../src/images/bg.jpg";
 import Navbar from "../component/navbar";
 import Footer from "../component/footer";
 
-// 🔹 Team Members Array पहले Define करें
+
 const teamMembers = [
     { name: "Prakash Suryavanshi", role: "Team-Leader", image: img1 },
     { name: "Bhushan Ravan", role: "Frontend developer", image: img2 },

@@ -109,9 +109,6 @@ const menuItems = [
     { icon: IoMdSettings, text: "Settings", path: "/settings" },
     { icon: FaUserPlus, text: "Polling agent", path: "/polling-agent" },
     { icon: IoPerson, text: "My polling agent", path: "/my-polling-agent" },
-    { icon: FaSms, text: "Send SMS", path: "/sms" },
-    { icon: FaPhoneVolume, text: "Voice Calls", path: "/voice-calls" },
-    { icon: FaWhatsapp, text: "Bulk WhatsApp", path: "/whatsapp" },
     { icon: RiLockPasswordLine, text: "Change Password", path: "/change-password" },
 ];
 

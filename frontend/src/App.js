@@ -22,6 +22,11 @@ const JsonUploader = lazy(() => import("./component/file.jsx"));
 const Dashboard2 =lazy(() => import("./component/dasboard2.jsx"));
 const Mediaform =lazy(()=> import("./component/mediaform.jsx"));
 const PollingAgent =lazy(()=> import("./component/pollingagent.jsx"));
+const BulkUpdate =lazy(()=> import("./component/bulkupdate.jsx"));
+const BulkNav =lazy(()=> import("./component/bulknav.jsx"));
+const Bulksms =lazy(()=> import("./component/bulksms.jsx"));
+const MyPollingAgent = lazy(()=> import("./component/agentlist.jsx"));
+
 
 
 
@@ -50,6 +55,10 @@ function App() {
           <Route path="/sidebar" element={<Sidebar/>}/>
           <Route path="/mediaform" element={<Mediaform/>}/>
           <Route path="/polling-agent" element={<PollingAgent/>}/>
+          <Route path="/bulkupdate" element={<BulkUpdate/>}/>
+          <Route path="/bulknavbar" element={<BulkNav/>}/>
+          <Route path="/bulksms" element={<Bulksms/>}/>
+          <Route path="/my-polling-agent" element={<MyPollingAgent/>}/>
         </Routes>
 
       </Suspense>
