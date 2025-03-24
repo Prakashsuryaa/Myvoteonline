@@ -106,7 +106,7 @@ const PollingAgent = () => {
                                 <tr className="bg-gray-200">
                                     <th className="p-3 text-left">Sno.</th>
                                     <th className="p-3 text-left">Name</th>
-                                    <th className="p-3 text-left">Mobile</th>
+                                    <th className="p-3 text-left">Mobile</th>   
                                     <th className="p-3 text-left">Address</th>
                                     <th className="p-3 text-left">City</th>
                                     <th className="p-3 text-left">Voter ID</th>
